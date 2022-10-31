@@ -1,0 +1,2 @@
+2022-10-31 15:38:19.657 [DEBU] {28f23a634b1723170b488b71cddd7bec} [ 41 ms] [default] [rows:7  ] SHOW FULL COLUMNS FROM `rotation_info`
+2022-10-31 15:38:19.744 [DEBU] {28f23a634b1723170b488b71cddd7bec} [ 85 ms] [default] [rows:1  ] INSERT INTO `rotation_info`(`sort`,`link`,`created_at`,`pic_url`,`updated_at`) VALUES(1,'https://wx.zsxq.com/dweb2/index/group/15528828844882','2022-10-31 15:38:19','https://images.zsxq.com/FgdL08hVmh-40_e12vh-ifbXpGxB?e=1672502399&token=kIxbL07-8jAj8w1n4s9zv64FuZZNEATmlU_Vm6zD:Cmvo2p6LPARMGyJ2dr-Ef3G3lmY=','2022-10-31 15:38:19') 

@@ -1,11 +1,21 @@
 server:
-  address:     ":8000"
+  address: ":8000"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
 
 logger:
-  level : "all"
+  level: "all"
   stdout: true
 
+# 数据库连接配置
+database:
+  logger:
+    path: "logs/sql"
+    level: "all"
+    stdout: true
+    ctxKeys: [ "RequestId" ]
 
-
+  #记得修改成自己的数据库密码
+  default:
+    link: "mysql:root:2BaDgEMGQj@tcp(127.0.0.1:3306)/shop"
+    debug: true

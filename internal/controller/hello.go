@@ -14,6 +14,7 @@ var (
 
 type cHello struct{}
 
+// 承上启下的
 func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes, err error) {
 	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
 	return
