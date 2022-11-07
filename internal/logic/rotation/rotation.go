@@ -1,4 +1,4 @@
-package content
+package rotation
 
 import (
 	"context"
@@ -18,7 +18,6 @@ func New() *sRotation {
 	return &sRotation{}
 }
 
-// Create 创建内容
 func (s *sRotation) Create(ctx context.Context, in model.RotationCreateInput) (out model.RotationCreateOutput, err error) {
 	// 不允许HTML代码
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
@@ -28,5 +27,5 @@ func (s *sRotation) Create(ctx context.Context, in model.RotationCreateInput) (o
 	if err != nil {
 		return out, err
 	}
-	return model.RotationCreateOutput{RotationId: uint(lastInsertID)}, err
+	return model.RotationCreateOutput{RotationId: int(lastInsertID)}, err
 }

@@ -7,13 +7,12 @@ import (
 	"goframe-shop-v2/internal/service"
 )
 
-var (
-	Rotation = cRotation{}
-)
+// Rotation 内容管理
+var Rotation = cRotation{}
 
 type cRotation struct{}
 
-func (a *cRotation) Create(ctx context.Context, req *backend.RotationAddReq) (res *backend.RotationAddRes, err error) {
+func (a *cRotation) Create(ctx context.Context, req *backend.RotationReq) (res *backend.RotationRes, err error) {
 	out, err := service.Rotation().Create(ctx, model.RotationCreateInput{
 		RotationCreateUpdateBase: model.RotationCreateUpdateBase{
 			PicUrl: req.PicUrl,
@@ -24,5 +23,5 @@ func (a *cRotation) Create(ctx context.Context, req *backend.RotationAddReq) (re
 	if err != nil {
 		return nil, err
 	}
-	return &backend.RotationAddRes{RotationId: out.RotationId}, nil
+	return &backend.RotationRes{RotationId: out.RotationId}, nil
 }

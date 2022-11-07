@@ -18,3 +18,4 @@ main
 output/
 manifest/output/
 temp/
+logs/
