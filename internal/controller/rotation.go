@@ -30,3 +30,15 @@ func (a *cRotation) Delete(ctx context.Context, req *backend.RotationDeleteReq) 
 	err = service.Rotation().Delete(ctx, req.Id)
 	return
 }
+
+func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) (res *backend.RotationUpdateRes, err error) {
+	err = service.Rotation().Update(ctx, model.RotationUpdateInput{
+		Id: req.Id,
+		RotationCreateUpdateBase: model.RotationCreateUpdateBase{
+			PicUrl: req.PicUrl,
+			Link:   req.Link,
+			Sort:   req.Sort,
+		},
+	})
+	return
+}
