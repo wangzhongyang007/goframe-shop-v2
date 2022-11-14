@@ -7,6 +7,7 @@ import (
 	"goframe-shop-v2/internal/service"
 )
 
+//承上启下  mvc
 // Rotation 内容管理
 var Rotation = cRotation{}
 
@@ -40,5 +41,5 @@ func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) 
 			Sort:   req.Sort,
 		},
 	})
-	return
+	return &backend.RotationUpdateRes{Id: req.Id}, nil
 }
