@@ -1,3 +1,9 @@
+# 接口文档
+
+gf run main.go 启动项目后访问：
+
+http://127.0.0.1:8000/swagger/
+
 # 说明
 
 main分支使用目前goframe最新版V2.2开发实现

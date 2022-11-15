@@ -31,3 +31,11 @@ type RotationUpdateReq struct {
 type RotationUpdateRes struct {
 	Id uint `json:"id"`
 }
+type RotationGetListReq struct {
+	g.Meta `path:"/backend/rotation/list" method:"get" tags:"轮播图" summary:"轮播图列表"`
+	Sort   int `json:"sort"   in:"query" dc:"排序类型 默认倒序"`
+	CommonPaginationReq
+}
+type RotationGetListRes struct {
+	Data interface{}
+}

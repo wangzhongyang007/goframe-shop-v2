@@ -43,3 +43,17 @@ func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) 
 	})
 	return &backend.RotationUpdateRes{Id: req.Id}, nil
 }
+
+// Index Rotation list
+func (a *cRotation) List(ctx context.Context, req *backend.RotationGetListReq) (res *backend.RotationGetListRes, err error) {
+	//req.Type = consts.ContentTypeRotation
+	getListRes, err := service.Rotation().GetList(ctx, model.RotationGetListInput{
+		Page: req.Page,
+		Size: req.Size,
+		Sort: req.Sort,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &backend.RotationGetListRes{getListRes}, nil
+}
