@@ -37,5 +37,8 @@ type RotationGetListReq struct {
 	CommonPaginationReq
 }
 type RotationGetListRes struct {
-	Data interface{}
+	List  interface{} `dc:"列表数据" json:"list"`
+	Total int         `dc:"总数" json:"total"`
+	Page  int         `dc:"分页号码" json:"page"`
+	Size  int         `dc:"分页数量" json:"size"`
 }

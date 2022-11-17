@@ -55,5 +55,5 @@ func (a *cRotation) List(ctx context.Context, req *backend.RotationGetListReq) (
 	if err != nil {
 		return nil, err
 	}
-	return &backend.RotationGetListRes{getListRes}, nil
+	return &backend.RotationGetListRes{List: getListRes.List, Total: getListRes.Total, Page: getListRes.Page, Size: getListRes.Size}, nil
 }

@@ -5,5 +5,6 @@
 package logic
 
 import (
+	_ "goframe-shop-v2/internal/logic/position"
 	_ "goframe-shop-v2/internal/logic/rotation"
 )
