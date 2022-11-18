@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model"
+	"goframe-shop-v2/internal/model/entity"
 	"goframe-shop-v2/internal/service"
 )
 
@@ -58,4 +59,37 @@ func (s *sRotation) Update(ctx context.Context, in model.RotationUpdateInput) er
 			Update()
 		return err
 	})
+}
+
+// GetList 查询内容列表
+func (s *sRotation) GetList(ctx context.Context, in model.RotationGetListInput) (out *model.RotationGetListOutput, err error) {
+	var (
+		m = dao.RotationInfo.Ctx(ctx)
+	)
+	out = &model.RotationGetListOutput{
+		Page: in.Page,
+		Size: in.Size,
+	}
+	// 分配查询
+	listModel := m.Page(in.Page, in.Size)
+	// 排序方式
+	listModel = listModel.OrderDesc(dao.RotationInfo.Columns().Sort)
+	// 执行查询
+	var list []*entity.RotationInfo
+	if err := listModel.Scan(&list); err != nil {
+		return out, err
+	}
+	// 没有数据
+	if len(list) == 0 {
+		return out, nil
+	}
+	out.Total, err = m.Count()
+	if err != nil {
+		return out, err
+	}
+	// Rotation todo
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
+	}
+	return
 }
