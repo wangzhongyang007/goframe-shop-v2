@@ -59,15 +59,11 @@ type RotationSearchOutput struct {
 	Total int                        `json:"total"` // 数据总数
 }
 
-//todo 讲讲这里 多级json
 type RotationGetListOutputItem struct {
-	//指定item的键名的方式
-	//Rotation *RotationListItem `json:"Rotation"`
-	//不指定item键名的方式
-	Id        uint        `json:"id"`         // 自增ID
-	PicUrl    string      `json:"pic_url"`    //图片链接
+	Id        uint        `json:"id"` // 自增ID
+	PicUrl    string      `json:"pic_url"`
+	Link      string      `json:"link"`
 	Sort      uint        `json:"sort"`       // 排序，数值越低越靠前，默认为添加时的时间戳，可用于置顶
-	Link      string      `json:"brief"`      // 跳转链接
 	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
 	UpdatedAt *gtime.Time `json:"updated_at"` // 修改时间
 }
@@ -78,10 +74,10 @@ type RotationSearchOutputItem struct {
 
 // RotationListItem 主要用于列表展示
 type RotationListItem struct {
-	Id        uint        `json:"id"`         // 自增ID
-	PicUrl    string      `json:"pic_url"`    //图片链接
+	Id        uint        `json:"id"` // 自增ID
+	PicUrl    string      `json:"pic_url"`
+	Link      string      `json:"link"`
 	Sort      uint        `json:"sort"`       // 排序，数值越低越靠前，默认为添加时的时间戳，可用于置顶
-	Link      string      `json:"brief"`      // 跳转链接
 	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
 	UpdatedAt *gtime.Time `json:"updated_at"` // 修改时间
 }
