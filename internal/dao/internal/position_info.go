@@ -20,9 +20,9 @@ type PositionInfoDao struct {
 
 // PositionInfoColumns defines and stores column names for table position_info.
 type PositionInfoColumns struct {
-	Id        string // 手工位配置
-	PicUrl    string // 图片地址
-	Name      string // 商品名称
+	Id        string //
+	PicUrl    string // 图片链接
+	GoodsName string // 商品名称
 	Link      string // 跳转链接
 	Sort      string // 排序
 	GoodsId   string // 商品id
@@ -35,7 +35,7 @@ type PositionInfoColumns struct {
 var positionInfoColumns = PositionInfoColumns{
 	Id:        "id",
 	PicUrl:    "pic_url",
-	Name:      "name",
+	GoodsName: "goods_name",
 	Link:      "link",
 	Sort:      "sort",
 	GoodsId:   "goods_id",

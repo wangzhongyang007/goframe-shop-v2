@@ -10,9 +10,9 @@ import (
 
 // PositionInfo is the golang structure for table position_info.
 type PositionInfo struct {
-	Id        int         `json:"id"        description:"手工位配置"`
-	PicUrl    string      `json:"picUrl"    description:"图片地址"`
-	Name      string      `json:"name"      description:"商品名称"`
+	Id        int         `json:"id"        description:""`
+	PicUrl    string      `json:"picUrl"    description:"图片链接"`
+	GoodsName string      `json:"goodsName" description:"商品名称"`
 	Link      string      `json:"link"      description:"跳转链接"`
 	Sort      int         `json:"sort"      description:"排序"`
 	GoodsId   int         `json:"goodsId"   description:"商品id"`

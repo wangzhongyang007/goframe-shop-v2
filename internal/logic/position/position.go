@@ -1,4 +1,4 @@
-package rotation
+package position
 
 import (
 	"context"
@@ -70,40 +70,12 @@ func (s *sPosition) GetList(ctx context.Context, in model.PositionGetListInput) 
 		Page: in.Page,
 		Size: in.Size,
 	}
-	// 默认查询topic
-	//if in.Type != "" {
-	//	m = m.Where(dao.Position.Columns().Type, in.Type)
-	//} else {
-	//	m = m.Where(dao.Position.Columns().Type, consts.PositionTypeTopic)
-	//}
-	// 栏目检索
-	//if in.CategoryId > 0 {
-	//	//返回数据的示例
-	//	idArray, err := service.Category().GetSubIdList(ctx, in.CategoryId)
-	//	if err != nil {
-	//		return out, err
-	//	}
-	//	//where in 查询
-	//	m = m.Where(dao.Position.Columns().CategoryId, idArray)
-	//}
-	// 管理员可以查看所有文章
-	//if in.UserId > 0 && !service.User().IsAdmin(ctx, in.UserId) {
-	//	m = m.Where(dao.Position.Columns().UserId, in.UserId)
-	//}
+
 	// 分配查询
 	listModel := m.Page(in.Page, in.Size)
 	// 排序方式
 	listModel = listModel.OrderDesc(dao.PositionInfo.Columns().Sort)
-	//switch in.Sort {
-	//case consts.PositionSortHot:
-	//	listModel = listModel.OrderDesc(dao.Position.Columns().ViewCount)
-	//
-	//case consts.PositionSortActive:
-	//	listModel = listModel.OrderDesc(dao.Position.Columns().UpdatedAt)
-	//
-	//default:
-	//	listModel = listModel.OrderDesc(dao.Position.Columns().Id)
-	//}
+
 	// 执行查询
 	var list []*entity.PositionInfo
 	if err := listModel.Scan(&list); err != nil {
@@ -124,21 +96,5 @@ func (s *sPosition) GetList(ctx context.Context, in model.PositionGetListInput) 
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
 	}
-	//// Category
-	//err = dao.Category.Ctx(ctx).
-	//	Fields(model.PositionListCategoryItem{}).
-	//	Where(dao.Category.Columns().Id, gutil.ListItemValuesUnique(out.List, "Position", "CategoryId")).
-	//	ScanList(&out.List, "Category", "Position", "id:CategoryId")
-	//if err != nil {
-	//	return out, err
-	//}
-	//// User
-	//err = dao.User.Ctx(ctx).
-	//	Fields(model.PositionListUserItem{}).
-	//	Where(dao.User.Columns().Id, gutil.ListItemValuesUnique(out.List, "Position", "UserId")).
-	//	ScanList(&out.List, "User", "Position", "id:UserId")
-	//if err != nil {
-	//	return out, err
-	//}
 	return
 }

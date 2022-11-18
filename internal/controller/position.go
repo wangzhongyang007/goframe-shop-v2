@@ -7,7 +7,7 @@ import (
 	"goframe-shop-v2/internal/service"
 )
 
-//承上启下  mvc
+//承上启下
 // Position 内容管理
 var Position = cPosition{}
 
@@ -16,11 +16,11 @@ type cPosition struct{}
 func (a *cPosition) Create(ctx context.Context, req *backend.PositionReq) (res *backend.PositionRes, err error) {
 	out, err := service.Position().Create(ctx, model.PositionCreateInput{
 		PositionCreateUpdateBase: model.PositionCreateUpdateBase{
-			PicUrl:  req.PicUrl,
-			Link:    req.Link,
-			Sort:    req.Sort,
-			GoodsId: req.GoodsId,
-			Name:    req.Name,
+			PicUrl:    req.PicUrl,
+			Link:      req.Link,
+			Sort:      req.Sort,
+			GoodsName: req.GoodsName,
+			GoodsId:   req.GoodsId,
 		},
 	})
 	if err != nil {
@@ -38,19 +38,17 @@ func (a *cPosition) Update(ctx context.Context, req *backend.PositionUpdateReq) 
 	err = service.Position().Update(ctx, model.PositionUpdateInput{
 		Id: req.Id,
 		PositionCreateUpdateBase: model.PositionCreateUpdateBase{
-			PicUrl:  req.PicUrl,
-			Link:    req.Link,
-			Sort:    req.Sort,
-			GoodsId: req.GoodsId,
-			Name:    req.Name,
+			PicUrl:    req.PicUrl,
+			Link:      req.Link,
+			Sort:      req.Sort,
+			GoodsName: req.GoodsName,
+			GoodsId:   req.GoodsId,
 		},
 	})
 	return &backend.PositionUpdateRes{Id: req.Id}, nil
 }
 
-// Index Position list
-func (a *cPosition) List(ctx context.Context, req *backend.PositionGetListReq) (res *backend.PositionGetListRes, err error) {
-	//req.Type = consts.ContentTypePosition
+func (a *cPosition) List(ctx context.Context, req *backend.PositionGetListCommonReq) (res *backend.PositionGetListCommonRes, err error) {
 	getListRes, err := service.Position().GetList(ctx, model.PositionGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -59,5 +57,9 @@ func (a *cPosition) List(ctx context.Context, req *backend.PositionGetListReq) (
 	if err != nil {
 		return nil, err
 	}
-	return &backend.PositionGetListRes{getListRes}, nil
+
+	return &backend.PositionGetListCommonRes{List: getListRes.List,
+		Page:  getListRes.Page,
+		Size:  getListRes.Size,
+		Total: getListRes.Total}, nil
 }

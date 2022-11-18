@@ -4,11 +4,11 @@ import "github.com/gogf/gf/v2/os/gtime"
 
 // PositionCreateUpdateBase 创建/修改内容基类
 type PositionCreateUpdateBase struct {
-	PicUrl  string
-	Link    string
-	GoodsId uint
-	Name    string
-	Sort    int
+	PicUrl    string
+	Link      string
+	Sort      int
+	GoodsName string
+	GoodsId   uint
 }
 
 // PositionCreateInput 创建内容
@@ -44,12 +44,12 @@ type PositionGetListOutput struct {
 
 // PositionSearchInput 搜索列表
 type PositionSearchInput struct {
-	//Key        string // 关键字
-	//Type       string // 内容模型
-	//CategoryId uint   // 栏目ID
-	Page int // 分页号码
-	Size int // 分页数量，最大50
-	Sort int // 排序类型(0:最新, 默认。1:活跃, 2:热度)
+	Key        string // 关键字
+	Type       string // 内容模型
+	CategoryId uint   // 栏目ID
+	Page       int    // 分页号码
+	Size       int    // 分页数量，最大50
+	Sort       int    // 排序类型(0:最新, 默认。1:活跃, 2:热度)
 }
 
 // PositionSearchOutput 搜索列表结果
@@ -61,17 +61,13 @@ type PositionSearchOutput struct {
 	Total int                        `json:"total"` // 数据总数
 }
 
-//todo 讲讲这里 多级json
 type PositionGetListOutputItem struct {
-	//指定item的键名的方式
-	//Position *PositionListItem `json:"Position"`
-	//不指定item键名的方式
-	Id        uint        `json:"id"`         // 自增ID
-	PicUrl    string      `json:"pic_url"`    //图片链接
-	Name      string      `json:"name"`       //手工位名称
-	GoodsId   uint        `json:"goods_id"`   //商品编号（id）
+	Id        uint        `json:"id"` // 自增ID
+	PicUrl    string      `json:"pic_url"`
+	Link      string      `json:"link"`
+	GoodsName string      `json:"goods_name"`
+	GoodsId   string      `json:"goods_id"`
 	Sort      uint        `json:"sort"`       // 排序，数值越低越靠前，默认为添加时的时间戳，可用于置顶
-	Link      string      `json:"brief"`      // 跳转链接
 	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
 	UpdatedAt *gtime.Time `json:"updated_at"` // 修改时间
 }
@@ -80,13 +76,12 @@ type PositionSearchOutputItem struct {
 	PositionGetListOutputItem
 }
 
-// PositionListItem 主要用于列表展示
-type PositionListItem struct {
-	Id        uint        `json:"id"`         // 自增ID
-	PicUrl    string      `json:"pic_url"`    //图片链接
-	Sort      uint        `json:"sort"`       // 排序，数值越低越靠前，默认为添加时的时间戳，可用于置顶
-	GoodsId   uint        `json:"goods_id"`   // 商品id todo
-	Link      string      `json:"brief"`      // 跳转链接
-	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
-	UpdatedAt *gtime.Time `json:"updated_at"` // 修改时间
-}
+//// PositionListItem 主要用于列表展示
+//type PositionListItem struct {
+//	Id        uint        `json:"id"` // 自增ID
+//	PicUrl    string      `json:"pic_url"`
+//	Link      string      `json:"link"`
+//	Sort      uint        `json:"sort"`       // 排序，数值越低越靠前，默认为添加时的时间戳，可用于置顶
+//	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
+//	UpdatedAt *gtime.Time `json:"updated_at"` // 修改时间
+//}

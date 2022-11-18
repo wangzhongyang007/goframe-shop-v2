@@ -12,9 +12,9 @@ import (
 // PositionInfo is the golang structure of table position_info for DAO operations like Where/Data.
 type PositionInfo struct {
 	g.Meta    `orm:"table:position_info, do:true"`
-	Id        interface{} // 手工位配置
-	PicUrl    interface{} // 图片地址
-	Name      interface{} // 商品名称
+	Id        interface{} //
+	PicUrl    interface{} // 图片链接
+	GoodsName interface{} // 商品名称
 	Link      interface{} // 跳转链接
 	Sort      interface{} // 排序
 	GoodsId   interface{} // 商品id
