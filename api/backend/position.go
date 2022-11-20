@@ -14,7 +14,7 @@ type PositionReq struct {
 }
 
 type PositionRes struct {
-	PositionId int `json:"positionId"`
+	PositionId int `json:"position_id"`
 }
 
 type PositionDeleteReq struct {
