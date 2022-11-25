@@ -2,7 +2,6 @@ package session
 
 import (
 	"context"
-	"github.com/gogf/gf/v2/util/gutil"
 	"goframe-shop-v2/internal/model/entity"
 	"goframe-shop-v2/internal/service"
 )
@@ -11,6 +10,8 @@ type sSession struct{}
 
 const (
 	sessionKeyUser = "SessionKeyUser" // 用户信息存放在Session中的Key
+	//sessionKeyLoginReferer = "SessionKeyReferer" // Referer存储，当已存在该session时不会更新。用于用户未登录时引导用户登录，并在登录后跳转到登录前页面。
+	//sessionKeyNotice       = "SessionKeyNotice"  // 存放在Session中的提示信息，往往使用后则删除
 )
 
 func init() {
@@ -23,8 +24,6 @@ func New() *sSession {
 
 // 设置用户Session.
 func (s *sSession) SetUser(ctx context.Context, user *entity.AdminInfo) error {
-	gutil.Dump(sessionKeyUser)
-	gutil.Dump("user:", user)
 	return service.BizCtx().Get(ctx).Session.Set(sessionKeyUser, user)
 }
 

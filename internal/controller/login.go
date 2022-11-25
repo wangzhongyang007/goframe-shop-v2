@@ -21,7 +21,7 @@ func (a *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backe
 	if err != nil {
 		return
 	}
-	loginUser := service.Session().GetUser(ctx)
-	res.User = loginUser
+	// 识别并跳转到登录前页面
+	res.Info = service.Session().GetUser(ctx)
 	return
 }

@@ -44,8 +44,20 @@ func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 			code = gcode.CodeInternalError
 		}
 		response.JsonExit(r, code.Code(), err.Error())
+		//if r.IsAjaxRequest() {
+		//	response.JsonExit(r, code.Code(), err.Error())
+		//} else {
+		//	service.View().Render500(r.Context(), model.View{
+		//		Error: err.Error(),
+		//	})
+		//}
 	} else {
 		response.JsonExit(r, code.Code(), "", res)
+		//if r.IsAjaxRequest() {
+		//	response.JsonExit(r, code.Code(), "", res)
+		//} else {
+		//	// 什么都不做，业务API自行处理模板渲染的成功逻辑。
+		//}
 	}
 }
 
@@ -59,9 +71,11 @@ func (s *sMiddleware) Ctx(r *ghttp.Request) {
 	service.BizCtx().Init(r, customCtx)
 	if userEntity := service.Session().GetUser(r.Context()); userEntity.Id > 0 {
 		customCtx.User = &model.ContextUser{
-			Id:      userEntity.Id,
-			Name:    userEntity.Name,
-			IsAdmin: userEntity.IsAdmin,
+			Id:   uint(userEntity.Id),
+			Name: userEntity.Name,
+			//Nickname: userEntity.Nickname,
+			//Avatar:   userEntity.Avatar,
+			IsAdmin: uint8(userEntity.IsAdmin),
 		}
 	}
 	// 将自定义的上下文对象传递到模板变量中使用
