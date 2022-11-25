@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 07/11/2022 19:44:36
+ Date: 25/11/2022 17:48:43
 */
 
 SET NAMES utf8mb4;
@@ -47,7 +47,7 @@ CREATE TABLE `admin_info` (
   `is_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否超级管理员',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name_unique` (`name`) USING BTREE COMMENT '名字唯一索引'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Table structure for article_info
@@ -171,6 +171,41 @@ CREATE TABLE `coupon_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
 
 -- ----------------------------
+-- Table structure for evente_e_card
+-- ----------------------------
+DROP TABLE IF EXISTS `evente_e_card`;
+CREATE TABLE `evente_e_card` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `org_id` int NOT NULL COMMENT '主办id',
+  `card_name` varchar(50) NOT NULL COMMENT 'E通卡名称',
+  `sale_start_date` timestamp NOT NULL COMMENT '售卖开始时间',
+  `sale_stop_date` timestamp NOT NULL COMMENT '售卖结束时间',
+  `usage` tinyint(1) NOT NULL DEFAULT '1' COMMENT '使用方式 1、预约 2、免预约',
+  PRIMARY KEY (`id`),
+  KEY `org_id` (`org_id`) USING BTREE,
+  KEY `time` (`sale_start_date`,`sale_stop_date`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='E通卡主表';
+
+-- ----------------------------
+-- Table structure for evente_e_card_extend
+-- ----------------------------
+DROP TABLE IF EXISTS `evente_e_card_extend`;
+CREATE TABLE `evente_e_card_extend` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `org_id` int NOT NULL COMMENT '主办id',
+  `card_id` int NOT NULL COMMENT 'E通卡id',
+  `evente_id` int NOT NULL COMMENT '活动id',
+  `screenings_id` int NOT NULL COMMENT '场次id',
+  `price_id` text NOT NULL COMMENT '票品ID集合 如 :9988,2235,6667',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  KEY `org_id` (`org_id`) USING BTREE,
+  KEY `evente_id` (`evente_id`,`screenings_id`) USING BTREE,
+  KEY `card_id` (`card_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='E通卡活动场次扩展表';
+
+-- ----------------------------
 -- Table structure for goods_info
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_info`;
@@ -270,6 +305,23 @@ CREATE TABLE `permission_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
+-- Table structure for position_info
+-- ----------------------------
+DROP TABLE IF EXISTS `position_info`;
+CREATE TABLE `position_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '图片链接',
+  `goods_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '商品名称',
+  `link` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '跳转链接',
+  `sort` tinyint NOT NULL DEFAULT '0' COMMENT '排序',
+  `goods_id` int NOT NULL DEFAULT '0' COMMENT '商品id',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
 -- Table structure for praise_info
 -- ----------------------------
 DROP TABLE IF EXISTS `praise_info`;
@@ -343,7 +395,7 @@ CREATE TABLE `rotation_info` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
 
 -- ----------------------------
 -- Table structure for user_coupon_info
