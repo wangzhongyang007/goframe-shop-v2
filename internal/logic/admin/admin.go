@@ -40,6 +40,23 @@ func (s *sAdmin) Create(ctx context.Context, in model.AdminCreateInput) (out mod
 	return model.AdminCreateOutput{AdminId: int(lastInsertID)}, err
 }
 
+func (s *sAdmin) GetUserByUserNamePassword(ctx context.Context, in model.UserLoginInput) map[string]interface{} {
+	//验证账号密码是否正确
+	adminInfo := entity.AdminInfo{}
+	err := dao.AdminInfo.Ctx(ctx).Where("name", in.Name).Scan(&adminInfo)
+	if err != nil {
+		return nil
+	}
+	if utility.EncryptPassword(in.Password, adminInfo.UserSalt) != adminInfo.Password {
+		return nil
+	} else {
+		return g.Map{
+			"id":       adminInfo.Id,
+			"username": adminInfo.Name,
+		}
+	}
+}
+
 // Delete 删除
 func (s *sAdmin) Delete(ctx context.Context, id uint) error {
 	return dao.AdminInfo.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
