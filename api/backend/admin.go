@@ -43,3 +43,13 @@ type AdminGetListCommonRes struct {
 	Size  int         `json:"size" description:"分页数量"`
 	Total int         `json:"total" description:"数据总数"`
 }
+
+type AdminGetInfoReq struct {
+	g.Meta `path:"/backend/admin/info" method:"get"`
+}
+
+type AdminGetInfoRes struct {
+	Id          int    `json:"id"`
+	IdentityKey string `json:"identity_key"`
+	Payload     string `json:"payload"`
+}
