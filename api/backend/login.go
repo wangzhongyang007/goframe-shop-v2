@@ -12,6 +12,8 @@ type LoginDoReq struct {
 }
 
 type LoginDoRes struct {
+	//Info interface{} `json:"info"`
+	//Referer string `json:"referer" dc:"引导客户端跳转地址"`
 	Token  string    `json:"token"`
 	Expire time.Time `json:"expire"`
 }

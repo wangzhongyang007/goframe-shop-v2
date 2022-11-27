@@ -80,7 +80,7 @@ func Authenticator(ctx context.Context) (interface{}, error) {
 		return "", err
 	}
 
-	if user := Admin().GetUserByUserNamePassword(ctx, in); user != nil {
+	if user := Admin().GetAdminByNamePassword(ctx, in); user != nil {
 		return user, nil
 	}
 
