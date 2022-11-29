@@ -2,15 +2,17 @@ package rotation
 
 import (
 	"context"
-	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/encoding/ghtml"
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/util/grand"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model"
 	"goframe-shop-v2/internal/model/entity"
 	"goframe-shop-v2/internal/service"
 	"goframe-shop-v2/utility"
+
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/encoding/ghtml"
+	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/util/grand"
 )
 
 type sAdmin struct{}
@@ -27,6 +29,12 @@ func (s *sAdmin) Create(ctx context.Context, in model.AdminCreateInput) (out mod
 	// 不允许HTML代码
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
+	}
+	// 判断账号是否已注册
+	adminInfo := entity.AdminInfo{}
+	dao.AdminInfo.Ctx(ctx).Where("name", in.Name).Scan(&adminInfo)
+	if adminInfo.Id != 0 {
+		return out, gerror.New("用户名已存在!")
 	}
 	//处理加密盐和密码的逻辑
 	UserSalt := grand.S(10)
