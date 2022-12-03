@@ -53,3 +53,9 @@ type AdminGetInfoRes struct {
 	IdentityKey string `json:"identity_key"`
 	Payload     string `json:"payload"`
 }
+
+type AdminGetInfoGtokenRes struct {
+	Id          int    `json:"id"`
+	IdentityKey string `json:"identity_key"`
+	Payload     string `json:"payload"`
+}
