@@ -6,7 +6,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
-	"github.com/gogf/gf/v2/util/gutil"
 	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model/entity"
@@ -28,6 +27,7 @@ var (
 			loginFunc := Login
 			// 启动gtoken
 			gfAdminToken := &gtoken.GfToken{
+				CacheMode:        2, //redis模式
 				ServerName:       "shop",
 				LoginPath:        "/backend/login",
 				LoginBeforeFunc:  loginFunc,
@@ -59,8 +59,12 @@ var (
 						panic(err)
 					}
 
-					group.ALLMap(g.Map{
-						"/backend/admin/info": controller.Admin.Info,
+					//group.ALLMap(g.Map{
+					//	"/backend/admin/info": controller.Admin.Info,
+					//})
+					//todo 优化代码 返回的数据格式和之前的一致
+					group.ALL("/backend/admin/info", func(r *ghttp.Request) {
+						r.Response.WriteJson(gfAdminToken.GetTokenData(r).Data)
 					})
 				})
 			})
@@ -79,11 +83,12 @@ func Login(r *ghttp.Request) (string, interface{}) {
 	adminInfo := entity.AdminInfo{}
 	err := dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, name).Scan(&adminInfo)
 	if err != nil {
-		return "", nil
+		r.Response.WriteJson(gtoken.Fail("账号或密码错误."))
+		r.ExitAll()
 	}
-	gutil.Dump("加密后密码：", utility.EncryptPassword(name, adminInfo.UserSalt))
 	if utility.EncryptPassword(password, adminInfo.UserSalt) != adminInfo.Password {
-		return "", nil
+		r.Response.WriteJson(gtoken.Fail("账号或密码错误."))
+		r.ExitAll()
 	}
 	//return "admin:" + gconv.String(adminInfo.Id), "1"
 	//因为我们是前后台一体的项目，前台项目的user和后台项目的admin的id一定有重合，所以要加前缀区分

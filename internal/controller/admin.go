@@ -36,13 +36,15 @@ func (a *cAdmin) Create(ctx context.Context, req *backend.AdminReq) (res *backen
 //	}, nil
 //}
 
-//gtoken 版本返回结果
-func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res *backend.AdminGetInfoGtokenRes, err error) {
-	return &backend.AdminGetInfoGtokenRes{
-		//Id:          gconv.Int(service.Auth().GetIdentity(ctx)),
-		IdentityKey: service.Auth().IdentityKey,
-		Payload:     service.Auth().GetPayload(ctx),
-	}, nil
+// gtoken 版本返回结果
+func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res interface{}, err error) {
+	//return ctx.
+	//return &backend.AdminGetInfoGtokenRes{
+	//	//Id:          gconv.Int(service.Auth().GetIdentity(ctx)),
+	//	IdentityKey: service.Auth().IdentityKey,
+	//	Payload:     service.Auth().GetPayload(ctx),
+	//}, nil
+	return nil, nil
 }
 
 func (a *cAdmin) Delete(ctx context.Context, req *backend.AdminDeleteReq) (res *backend.AdminDeleteRes, err error) {
