@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model/entity"
@@ -28,6 +29,7 @@ var (
 			// 认证接口
 			loginFunc := Login
 			loginAfterFunc := LoginAfterFunc
+			authAfterFunc := AuthAfterFunc
 			// 启动gtoken
 			gfAdminToken := &gtoken.GfToken{
 				CacheMode:        2, //redis模式
@@ -38,11 +40,18 @@ var (
 				LogoutPath:       "/backend/user/logout",
 				AuthExcludePaths: g.SliceStr{"/admin/user/info", "/admin/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
 				MultiLogin:       true,
+				AuthPaths:        g.SliceStr{"/backend/admin/info"},
+				AuthAfterFunc:    authAfterFunc,
+			}
+			//todo 抽取方法
+			err = gfAdminToken.Start()
+			if err != nil {
+				return err
 			}
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					service.Middleware().CORS,
-					//service.Middleware().Ctx,
+					service.Middleware().Ctx,
 					service.Middleware().ResponseHandler,
 				)
 				group.Bind(
@@ -62,14 +71,14 @@ var (
 					if err != nil {
 						panic(err)
 					}
-					//group.ALLMap(g.Map{
-					//	"/backend/admin/info": controller.Admin.Info,
-					//})
-					group.Middleware(service.Middleware().GTokenSetCtx) //for gtoken
-					//todo 优化代码 返回的数据格式和之前的一致
-					group.ALL("/backend/admin/info", func(r *ghttp.Request) {
-						r.Response.WriteJson(gfAdminToken.GetTokenData(r).Data)
+					group.ALLMap(g.Map{
+						"/backend/admin/info": controller.Admin.Info,
 					})
+					//group.Middleware(service.Middleware().GTokenSetCtx, ) //for gtoken
+					//todo 优化代码 返回的数据格式和之前的一致
+					//group.ALL("/backend/admin/info", func(r *ghttp.Request) {
+					//	r.Response.WriteJson(gfAdminToken.GetTokenData(r).Data)
+					//})
 				})
 			})
 			s.Run()
@@ -156,4 +165,28 @@ type LoginRes struct {
 	IsAdmin     int                     `json:"is_admin"`    //是否超管
 	RoleIds     string                  `json:"role_ids"`    //角色
 	Permissions []entity.PermissionInfo `json:"permissions"` //权限列表
+}
+
+// 鉴权通过后的的自定义方法
+func AuthAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
+	//g.Dump("respData:", respData)
+	if !respData.Success() {
+		respData.Code = 0
+		r.Response.WriteJson(respData)
+	} else {
+		respData.Code = 1
+		//获得登录用户id
+		userKey := respData.GetString("userKey")
+		adminInfo := entity.AdminInfo{}
+		err := gconv.Struct(respData.GetString("data"), &adminInfo)
+		if err != nil {
+			return
+		}
+		adminId := gstr.StrEx(userKey, consts.GtokenUserKeyPrefix)
+		r.SetCtxVar(consts.CtxAdminId, adminId)
+		r.SetCtxVar(consts.CtxAdminName, adminInfo.Name)
+		r.SetCtxVar(consts.CtxAdminRoleIds, adminInfo.RoleIds)
+		r.SetCtxVar(consts.CtxAdminIsAdmin, adminInfo.IsAdmin)
+		r.Middleware.Next()
+	}
 }
