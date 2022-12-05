@@ -33,8 +33,6 @@ type cLogin struct{}
 //	return
 //}
 
-//for gtoken
-
 func (c *cLogin) RefreshToken(ctx context.Context, req *backend.RefreshTokenReq) (res *backend.RefreshTokenRes, err error) {
 	res = &backend.RefreshTokenRes{}
 	res.Token, res.Expire = service.Auth().RefreshHandler(ctx)

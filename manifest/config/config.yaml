@@ -15,7 +15,8 @@ database:
     link: "mysql:root:2BaDgEMGQj@tcp(127.0.0.1:3306)/shop"
     debug: true
 
-# redis链接配置
+
+# Redis 配置示例
 redis:
   default:
     address: 127.0.0.1:6379
