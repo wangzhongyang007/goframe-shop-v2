@@ -11,6 +11,15 @@ database:
     stdout: true
     ctxKeys: [ "RequestId" ]
 
-  default:  # todo  修改成自己的密码
+  default: # todo  修改成自己的密码
     link: "mysql:root:2BaDgEMGQj@tcp(127.0.0.1:3306)/shop"
     debug: true
+
+# Redis 配置示例
+redis:
+  # 单实例配置示例1
+  default:
+    address: 127.0.0.1:6379
+    db: 1
+    pass: f2QteFQvC6rxjjJ6
+    idleTimeout: 600

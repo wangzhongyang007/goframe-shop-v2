@@ -48,8 +48,17 @@ type AdminGetInfoReq struct {
 	g.Meta `path:"/backend/admin/info" method:"get"`
 }
 
+// for jwt
+//type AdminGetInfoRes struct {
+//	Id          int    `json:"id"`
+//	IdentityKey string `json:"identity_key"`
+//	Payload     string `json:"payload"`
+//}
+
+// for gtoken
 type AdminGetInfoRes struct {
-	Id          int    `json:"id"`
-	IdentityKey string `json:"identity_key"`
-	Payload     string `json:"payload"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	RoleIds string `json:"role_ids"`
+	IsAdmin int    `json:"is_admin"`
 }
