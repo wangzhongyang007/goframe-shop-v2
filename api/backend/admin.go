@@ -62,3 +62,9 @@ type AdminGetInfoRes struct {
 	RoleIds string `json:"role_ids"`
 	IsAdmin int    `json:"is_admin"`
 }
+
+type AdminGetInfoGtokenRes struct {
+	Id          int    `json:"id"`
+	IdentityKey string `json:"identity_key"`
+	Payload     string `json:"payload"`
+}

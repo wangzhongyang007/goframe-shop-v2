@@ -11,6 +11,7 @@ var Login = cLogin{}
 
 type cLogin struct{}
 
+//for session
 //func (a *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backend.LoginDoRes, err error) {
 //	res = &backend.LoginDoRes{}
 //	err = service.Login().Login(ctx, model.UserLoginInput{

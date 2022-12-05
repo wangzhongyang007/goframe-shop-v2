@@ -3,6 +3,9 @@ package cmd
 import (
 	"context"
 	"github.com/goflyfox/gtoken/gtoken"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 	"goframe-shop-v2/api/backend"
@@ -13,10 +16,6 @@ import (
 	"goframe-shop-v2/utility"
 	"goframe-shop-v2/utility/response"
 	"strconv"
-
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/os/gcmd"
 
 	"goframe-shop-v2/internal/controller"
 )
@@ -29,19 +28,18 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			// 启动gtoken
-			gfToken := &gtoken.GfToken{
+			gfAdminToken := &gtoken.GfToken{
+				CacheMode:        2,
 				ServerName:       "shop",
-				CacheMode:        2, //gredis
 				LoginPath:        "/backend/login",
 				LoginBeforeFunc:  loginFunc,
 				LoginAfterFunc:   loginAfterFunc,
 				LogoutPath:       "/backend/user/logout",
 				AuthPaths:        g.SliceStr{"/backend/admin/info"},
-				AuthExcludePaths: g.SliceStr{"/user/info", "/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
-				MultiLogin:       true,
+				AuthExcludePaths: g.SliceStr{"/admin/user/info", "/admin/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
 				AuthAfterFunc:    authAfterFunc,
+				MultiLogin:       true,
 			}
-			// 认证接口
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					service.Middleware().CORS,
@@ -49,10 +47,10 @@ var (
 					service.Middleware().ResponseHandler,
 				)
 				//gtoken中间件绑定
-				err := gfToken.Middleware(ctx, group)
-				if err != nil {
-					panic(err)
-				}
+				//err := gfAdminToken.Middleware(ctx, group)
+				//if err != nil {
+				//	panic(err)
+				//}
 				group.Bind(
 					controller.Hello,        //示例
 					controller.Rotation,     // 轮播图
@@ -66,6 +64,10 @@ var (
 				// Special handler that needs authentication.
 				group.Group("/", func(group *ghttp.RouterGroup) {
 					//group.Middleware(service.Middleware().Auth) //for jwt
+					err := gfAdminToken.Middleware(ctx, group)
+					if err != nil {
+						panic(err)
+					}
 					group.ALLMap(g.Map{
 						"/backend/admin/info": controller.Admin.Info,
 					})
@@ -100,7 +102,7 @@ func loginFunc(r *ghttp.Request) (string, interface{}) {
 		r.ExitAll()
 	}
 	// 唯一标识，扩展参数user data
-	return consts.GtokenAdminPrefix + strconv.Itoa(adminInfo.Id), adminInfo
+	return consts.GTokenAdminPrefix + strconv.Itoa(adminInfo.Id), adminInfo
 }
 
 // todo 迁移到合适的位置
@@ -115,7 +117,7 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		respData.Code = 1
 		//获得登录用户id
 		userKey := respData.GetString("userKey")
-		adminId := gstr.StrEx(userKey, consts.GtokenAdminPrefix)
+		adminId := gstr.StrEx(userKey, consts.GTokenAdminPrefix)
 		g.Dump("adminId:", adminId)
 		//根据id获得登录用户其他信息
 		adminInfo := entity.AdminInfo{}
