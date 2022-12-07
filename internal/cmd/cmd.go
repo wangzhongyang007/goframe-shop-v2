@@ -60,6 +60,7 @@ var (
 					controller.Admin.Delete, // 管理员
 					controller.Admin.List,   // 管理员
 					controller.Login,        // 登录
+					controller.Data,         // 数据大屏相关
 				)
 				// Special handler that needs authentication.
 				group.Group("/", func(group *ghttp.RouterGroup) {
@@ -163,11 +164,7 @@ func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		response.Auth(r)
 		return
 	}
-	//账号被冻结拉黑
-	if adminInfo.DeletedAt != nil {
-		response.AuthBlack(r)
-		return
-	}
+
 	r.SetCtxVar(consts.CtxAdminId, adminInfo.Id)
 	r.SetCtxVar(consts.CtxAdminName, adminInfo.Name)
 	r.SetCtxVar(consts.CtxAdminIsAdmin, adminInfo.IsAdmin)
