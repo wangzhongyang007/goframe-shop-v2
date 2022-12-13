@@ -13,6 +13,7 @@ import (
 type (
 	IData interface {
 		HeadCard(ctx context.Context) (out *model.HeadDataOutput, err error)
+		Echarts(ctx context.Context) (out *model.EchartsOutput, err error)
 	}
 )
 
