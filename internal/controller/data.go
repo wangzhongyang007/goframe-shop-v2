@@ -21,3 +21,16 @@ func (c *cData) HeadCard(ctx context.Context, req *backend.DataHeadReq) (res *ba
 		ConversionRate:  card.ConversionRate,
 	}, err
 }
+
+func (c *cData) Echarts(ctx context.Context, req *backend.DataEChartsReq) (res *backend.DataEChartsRes, err error) {
+	echats, err := service.Data().Echarts(ctx)
+	if err != nil {
+		return &backend.DataEChartsRes{}, err
+	}
+	return &backend.DataEChartsRes{
+		OrderTotal:           echats.OrderTotal,
+		SalePriceTotal:       echats.SalePriceTotal,
+		ConsumptionPerPerson: echats.ConsumptionPerPerson,
+		NewOrder:             echats.NewOrder,
+	}, err
+}

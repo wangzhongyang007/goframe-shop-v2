@@ -16,32 +16,29 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 	"math/rand"
 	"net"
-	"os"
-	"os/exec"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
 )
 
-//密码加密
+// 密码加密
 func EncryptPassword(password, salt string) string {
 	return gmd5.MustEncryptString(gmd5.MustEncryptString(password) + gmd5.MustEncryptString(salt))
 }
 
-//时间戳转 yyyy-MM-dd HH:mm:ss
+// 时间戳转 yyyy-MM-dd HH:mm:ss
 func TimeStampToDateTime(timeStamp int64) string {
 	tm := gtime.NewFromTimeStamp(timeStamp)
 	return tm.Format("Y-m-d H:i:s")
 }
 
-//时间戳转 yyyy-MM-dd
+// 时间戳转 yyyy-MM-dd
 func TimeStampToDate(timeStamp int64) string {
 	tm := gtime.NewFromTimeStamp(timeStamp)
 	return tm.Format("Y-m-d")
 }
 
-//获取当前请求接口域名
+// 获取当前请求接口域名
 func GetDomain(r *ghttp.Request) (string, error) {
 	pathInfo, err := gurl.ParseURL(r.GetUrl(), -1)
 	if err != nil {
@@ -57,7 +54,7 @@ func GetUserAgent(ctx context.Context) string {
 	return ghttp.RequestFromCtx(ctx).Header.Get("User-Agent")
 }
 
-//获取客户端IP
+// 获取客户端IP
 func GetClientIp(r *ghttp.Request) string {
 	ip := r.Header.Get("X-Forwarded-For")
 	if ip == "" {
@@ -66,7 +63,7 @@ func GetClientIp(r *ghttp.Request) string {
 	return ip
 }
 
-//服务端ip
+// 服务端ip
 func GetLocalIP() (ip string, err error) {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -88,7 +85,7 @@ func GetLocalIP() (ip string, err error) {
 	return
 }
 
-//获取ip所属城市
+// 获取ip所属城市
 func GetCityByIp(ip string) string {
 	if ip == "" {
 		return ""
@@ -113,7 +110,7 @@ func GetCityByIp(ip string) string {
 	}
 }
 
-//日期字符串转时间戳（秒）
+// 日期字符串转时间戳（秒）
 func StrToTimestamp(dateStr string) int64 {
 	tm, err := gtime.StrToTime(dateStr)
 	if err != nil {
@@ -208,7 +205,7 @@ func ParseDSN(cfg *gdb.ConfigNode) (err error) {
 	return
 }
 
-//获取附件真实路径
+// 获取附件真实路径
 func GetRealFilesUrl(r *ghttp.Request, path string) (realPath string, err error) {
 	if gstr.ContainsI(path, "http") {
 		realPath = path
@@ -222,7 +219,7 @@ func GetRealFilesUrl(r *ghttp.Request, path string) (realPath string, err error)
 	return
 }
 
-//获取附件相对路径
+// 获取附件相对路径
 func GetFilesPath(fileUrl string) (path string, err error) {
 	gvar_type, err := g.Cfg().Get(context.Background(), "upload.type")
 	if err != nil {
@@ -252,7 +249,7 @@ func GetFilesPath(fileUrl string) (path string, err error) {
 	return
 }
 
-//货币转化为分
+// 货币转化为分
 func CurrencyLong(currency interface{}) int64 {
 	strArr := gstr.Split(gconv.String(currency), ".")
 	switch len(strArr) {
@@ -269,23 +266,23 @@ func CurrencyLong(currency interface{}) int64 {
 	return 0
 }
 
-func GetExcPath() string {
-	file, _ := exec.LookPath(os.Args[0])
-	// 获取包含可执行文件名称的路径
-	path, _ := filepath.Abs(file)
-	// 获取可执行文件所在目录
-	index := strings.LastIndex(path, string(os.PathSeparator))
-	ret := path[:index]
-	return strings.Replace(ret, "\\", "/", -1)
-}
+//func GetExcPath() string {
+//	file, _ := exec.LookPath(os.Args[0])
+//	// 获取包含可执行文件名称的路径
+//	path, _ := filepath.Abs(file)
+//	// 获取可执行文件所在目录
+//	index := strings.LastIndex(path, string(os.PathSeparator))
+//	ret := path[:index]
+//	return strings.Replace(ret, "\\", "/", -1)
+//}
 
-//流水号
+// 流水号
 func CreateLogSn(prefix string) string {
 	rand.Seed(time.Now().UnixNano())
 	return prefix + strings.Replace(time.Now().Format("20060102150405.000"), ".", "", -1) + strconv.Itoa(rand.Intn(899)+100)
 }
 
-//获取随机整数
+// 获取随机整数
 func RandInt(max int) int {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Intn(max)
@@ -300,3 +297,25 @@ func RandInt(max int) int {
 //日期范围查询
 //whereCondition.Set(dao.UserInfo.Columns.CreatedAt+" >=", gtime.New(req.Date).StartOfDay())
 //whereCondition.Set(dao.UserInfo.Columns.CreatedAt+" <=", gtime.New(req.Date).EndOfDay())
+
+// 生成最近一周的日期
+func GetRecent7Date() (dates []string) {
+	gt := gtime.New(time.Now())
+	dates = []string{
+		gt.Format("Y-m-d"),
+		gt.Add(-gtime.D * 1).Format("Y-m-d"),
+		gt.Add(-gtime.D * 2).Format("Y-m-d"),
+		gt.Add(-gtime.D * 3).Format("Y-m-d"),
+		gt.Add(-gtime.D * 4).Format("Y-m-d"),
+		gt.Add(-gtime.D * 5).Format("Y-m-d"),
+		gt.Add(-gtime.D * 6).Format("Y-m-d"),
+	}
+	return
+}
+
+// 获取一周前的日期
+func GetBefore7Date() (date string) {
+	gt := gtime.New(time.Now())
+	date = gt.Add(-gtime.D * 6).Format("Y-m-d")
+	return
+}
