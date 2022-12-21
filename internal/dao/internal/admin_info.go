@@ -26,7 +26,6 @@ type AdminInfoColumns struct {
 	RoleIds   string // 角色ids
 	CreatedAt string //
 	UpdatedAt string //
-	DeletedAt string //
 	UserSalt  string // 加密盐
 	IsAdmin   string // 是否超级管理员
 }
@@ -39,7 +38,6 @@ var adminInfoColumns = AdminInfoColumns{
 	RoleIds:   "role_ids",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
-	DeletedAt: "deleted_at",
 	UserSalt:  "user_salt",
 	IsAdmin:   "is_admin",
 }

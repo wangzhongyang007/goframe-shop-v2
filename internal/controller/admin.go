@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/gogf/gf/v2/util/gconv"
 	"goframe-shop-v2/api/backend"
+	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/model"
 	"goframe-shop-v2/internal/service"
 )
@@ -28,13 +29,23 @@ func (a *cAdmin) Create(ctx context.Context, req *backend.AdminReq) (res *backen
 	return &backend.AdminRes{AdminId: out.AdminId}, nil
 }
 
-// It is the get user data handler
+// for jwt
+//func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res *backend.AdminGetInfoRes, err error) {
+//	return &backend.AdminGetInfoRes{
+//		Id:          gconv.Int(service.Auth().GetIdentity(ctx)),
+//		IdentityKey: service.Auth().IdentityKey,
+//		Payload:     service.Auth().GetPayload(ctx),
+//	}, nil
+//}
+
+// gtoken 版本返回结果
 func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res *backend.AdminGetInfoRes, err error) {
 	return &backend.AdminGetInfoRes{
-		Id:          gconv.Int(service.Auth().GetIdentity(ctx)),
-		IdentityKey: service.Auth().IdentityKey,
-		Payload:     service.Auth().GetPayload(ctx),
-	}, nil
+		Id:      gconv.Int(ctx.Value(consts.CtxAdminId)),
+		Name:    gconv.String(ctx.Value(consts.CtxAdminName)),
+		IsAdmin: gconv.Int(ctx.Value(consts.CtxAdminIsAdmin)),
+		RoleIds: gconv.String(ctx.Value(consts.CtxAdminRoleIds)),
+	}, err
 }
 
 func (a *cAdmin) Delete(ctx context.Context, req *backend.AdminDeleteReq) (res *backend.AdminDeleteRes, err error) {

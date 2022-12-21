@@ -36,7 +36,7 @@ func (s *sLogin) Login(ctx context.Context, in model.UserLoginInput) error {
 	if err := service.Session().SetUser(ctx, &adminInfo); err != nil {
 		return err
 	}
-	// 自动更新上线
+	// 自动更新上线 for session
 	service.BizCtx().SetUser(ctx, &model.ContextUser{
 		Id:      uint(adminInfo.Id),
 		Name:    adminInfo.Name,

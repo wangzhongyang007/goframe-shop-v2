@@ -51,7 +51,7 @@ func (s *sAdmin) Create(ctx context.Context, in model.AdminCreateInput) (out mod
 func (s *sAdmin) GetUserByUserNamePassword(ctx context.Context, in model.UserLoginInput) map[string]interface{} {
 	//验证账号密码是否正确
 	adminInfo := entity.AdminInfo{}
-	err := dao.AdminInfo.Ctx(ctx).Where("name", in.Name).Scan(&adminInfo)
+	err := dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, in.Name).Scan(&adminInfo)
 	if err != nil {
 		return nil
 	}
@@ -128,7 +128,11 @@ func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *
 	}
 	// Admin
 	//指定item的键名用：ScanList
+	//todo 注释掉
 	//if err := listModel.ScanList(&out.List, "Admin"); err != nil {
+	//	return out, err
+	//}
+
 	//不指定item的键名用：Scan
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
