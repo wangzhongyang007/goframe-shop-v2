@@ -15,7 +15,7 @@ type RoleCreateInput struct {
 
 // RoleCreateOutput 创建内容返回结果
 type RoleCreateOutput struct {
-	RoleId int `json:"role_id"`
+	RoleId uint `json:"role_id"`
 }
 
 // RoleUpdateInput 修改内容
@@ -49,4 +49,21 @@ type RoleGetListOutputItem struct {
 
 type RoleSearchOutputItem struct {
 	RoleGetListOutputItem
+}
+
+type RoleAddPermissionInput struct {
+	RoleId       uint `json:"role_id"`
+	PermissionId uint `json:"permission_id"`
+}
+
+type RoleAddPermissionOutput struct {
+	Id uint `json:"id"`
+}
+
+type RoleDeletePermissionInput struct {
+	RoleId       uint `json:"role_id"`
+	PermissionId uint `json:"permission_id"`
+}
+
+type RoleDeletePermissionOutput struct {
 }
