@@ -152,10 +152,11 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		if err != nil {
 			return
 		}
+		// 设置登录返回信息
 		data := &backend.LoginRes{
 			Type:        "Bearer",
 			Token:       respData.GetString("token"),
-			ExpireIn:    10 * 24 * 60 * 60, //单位秒,
+			ExpireIn:    10 * 24 * 60 * 60, //单位秒, 这里了设置1天
 			IsAdmin:     adminInfo.IsAdmin,
 			RoleIds:     adminInfo.RoleIds,
 			Permissions: permissions,
@@ -165,6 +166,7 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	return
 }
 
+// 拦截认证完成后调用
 func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	//g.Dump("respData:", respData)
 	var adminInfo entity.AdminInfo

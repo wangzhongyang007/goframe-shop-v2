@@ -13,7 +13,7 @@ gfcli:
   # dao生成
   gen:
     dao:  #todo 换成你自己的密码
-      - link: "mysql:root:2BaDgEMGQj@tcp(127.0.0.1:3306)/shop"
+      - link: "mysql:root:root@tcp(127.0.0.1:3306)/shop"
         removePrefix: "gf_"
         descriptionTag: true
         noModelComment: true
