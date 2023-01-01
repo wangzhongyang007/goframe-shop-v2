@@ -23,3 +23,9 @@ redis:
     db: 1
     pass: f2QteFQvC6rxjjJ6
     idleTimeout: 600
+
+qiniu:
+  bucket: "xxx"
+  accessKey: "x"
+  secretKey: "x"
+  url: "http://xx.dayu.club/"
