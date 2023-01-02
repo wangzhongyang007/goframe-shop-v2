@@ -10,6 +10,7 @@ import (
 	_ "goframe-shop-v2/internal/logic/data"
 	_ "goframe-shop-v2/internal/logic/login"
 	_ "goframe-shop-v2/internal/logic/middleware"
+	_ "goframe-shop-v2/internal/logic/permission"
 	_ "goframe-shop-v2/internal/logic/position"
 	_ "goframe-shop-v2/internal/logic/role"
 	_ "goframe-shop-v2/internal/logic/rotation"
