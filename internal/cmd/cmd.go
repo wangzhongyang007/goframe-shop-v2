@@ -78,6 +78,9 @@ var (
 					group.ALLMap(g.Map{
 						"/backend/admin/info": controller.Admin.Info,
 					})
+					group.Bind(
+						controller.File,
+					)
 					//group.Middleware(service.Middleware().GTokenSetCtx, ) //for gtoken
 					//todo 优化代码 返回的数据格式和之前的一致
 					//group.ALL("/backend/admin/info", func(r *ghttp.Request) {

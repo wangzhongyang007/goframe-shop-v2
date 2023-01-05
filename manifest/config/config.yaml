@@ -29,3 +29,6 @@ qiniu:
   accessKey: "x"
   secretKey: "x"
   url: "http://xx.dayu.club/"
+
+upload:
+  path: "upload"
