@@ -45,7 +45,7 @@ func (s *sFile) Upload(ctx context.Context, in model.FileUploadInput) (out *mode
 	//安全性校验：每个人1分钟内只能上传10次
 	count, err := dao.FileInfo.Ctx(ctx).
 		Where(dao.FileInfo.Columns().UserId, gconv.Int(ctx.Value(consts.CtxAdminId))).
-		WhereGTE(dao.FileInfo.Columns().CreatedAt, gtime.Now().Add(time.Minute)).Count()
+		WhereGTE(dao.FileInfo.Columns().CreatedAt, gtime.Now().Add(-time.Minute)).Count()
 	if err != nil {
 		return nil, err
 	}
