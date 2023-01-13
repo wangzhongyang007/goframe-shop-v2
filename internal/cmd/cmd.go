@@ -79,7 +79,8 @@ var (
 						"/backend/admin/info": controller.Admin.Info,
 					})
 					group.Bind(
-						controller.File,
+						controller.File,   //从0到1实现文件入库
+						controller.Upload, //实现可跨项目使用的文件上云工具类
 					)
 					//group.Middleware(service.Middleware().GTokenSetCtx, ) //for gtoken
 					//todo 优化代码 返回的数据格式和之前的一致

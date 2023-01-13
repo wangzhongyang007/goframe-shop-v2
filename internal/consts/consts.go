@@ -10,4 +10,6 @@ const (
 	CtxAdminName             = "CtxAdminName"
 	CtxAdminIsAdmin          = "CtxAdminIsAdmin"
 	CtxAdminRoleIds          = "CtxAdminRoleIds"
+	//统一管理错误提示
+	CodeMissingParameterMsg = "请检查是否缺少参数"
 )

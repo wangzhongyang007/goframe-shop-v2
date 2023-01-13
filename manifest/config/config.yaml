@@ -25,10 +25,10 @@ redis:
     idleTimeout: 600
 
 qiniu:
-  bucket: "xxx"
+  bucket: "x"
   accessKey: "x"
   secretKey: "x"
-  url: "http://xx.dayu.club/"
+  url: "http://x.x.x/"
 
 upload:
   path: "upload"
