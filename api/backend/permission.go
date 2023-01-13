@@ -8,7 +8,7 @@ type PermissionCreateUpdateBase struct {
 }
 
 type PermissionReq struct {
-	g.Meta `path:"/backend/permission/add" method:"post" desc:"添加权限" tags:"permission"`
+	g.Meta `path:"/permission/add" method:"post" desc:"添加权限" tags:"permission"`
 	PermissionCreateUpdateBase
 }
 
@@ -17,7 +17,7 @@ type PermissionRes struct {
 }
 
 type PermissionUpdateReq struct {
-	g.Meta `path:"/backend/permission/update" method:"post" desc:"修改权限" tags:"permission"`
+	g.Meta `path:"/permission/update" method:"post" desc:"修改权限" tags:"permission"`
 	Id     uint `json:"id" v:"required#id必填" desc:"id"`
 	PermissionCreateUpdateBase
 }
@@ -27,13 +27,13 @@ type PermissionUpdateRes struct {
 }
 
 type PermissionDeleteReq struct {
-	g.Meta `path:"/backend/permission/delete" method:"delete" tags:"权限" summary:"删除权限接口"`
+	g.Meta `path:"/permission/delete" method:"delete" tags:"权限" summary:"删除权限接口"`
 	Id     uint `v:"min:1#请选择需要删除的权限" dc:"权限id"`
 }
 type PermissionDeleteRes struct{}
 
 type PermissionGetListCommonReq struct {
-	g.Meta `path:"/backend/permission/list" method:"get" tags:"权限" summary:"权限列表接口"`
+	g.Meta `path:"/permission/list" method:"get" tags:"权限" summary:"权限列表接口"`
 	CommonPaginationReq
 }
 type PermissionGetListCommonRes struct {
