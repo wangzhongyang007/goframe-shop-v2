@@ -21,26 +21,13 @@ import (
 
 var (
 	Main = gcmd.Command{
-		Name:  "main",
-		Usage: "main",
+		Name:  "Go开源电商实战项目",
+		Usage: "演示学习使用，作者：王中阳Go，微信：wangzhongyang1993，公众号：程序员升职加薪之旅",
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			// 启动gtoken
-			gfAdminToken := &gtoken.GfToken{
-				CacheMode:        2,
-				ServerName:       "shop",
-				LoginPath:        "/backend/login",
-				LoginBeforeFunc:  loginFunc,
-				LoginAfterFunc:   loginAfterFunc,
-				LogoutPath:       "/backend/user/logout",
-				AuthPaths:        g.SliceStr{"/backend/admin/info"},
-				AuthExcludePaths: g.SliceStr{"/admin/user/info", "/admin/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
-				AuthAfterFunc:    authAfterFunc,
-				MultiLogin:       true,
-			}
-			//todo 抽取方法
-			err = gfAdminToken.Start()
+			// 启动管理后台gtoken
+			gfAdminToken, err := StartBackendGToken()
 			if err != nil {
 				return err
 			}
@@ -50,11 +37,7 @@ var (
 					service.Middleware().Ctx,
 					service.Middleware().ResponseHandler,
 				)
-				//gtoken中间件绑定
-				//err := gfAdminToken.Middleware(ctx, group)
-				//if err != nil {
-				//	panic(err)
-				//}
+				//不需要登录的路由组绑定
 				group.Bind(
 					controller.Hello,        //示例
 					controller.Rotation,     // 轮播图
@@ -68,9 +51,8 @@ var (
 					controller.Role,         // 角色
 					controller.Permission,   // 权限
 				)
-				// Special handler that needs authentication.
+				//需要登录的路由组绑定
 				group.Group("/", func(group *ghttp.RouterGroup) {
-					//group.Middleware(service.Middleware().Auth) //for jwt
 					err := gfAdminToken.Middleware(ctx, group)
 					if err != nil {
 						panic(err)
@@ -82,11 +64,6 @@ var (
 						controller.File,   //从0到1实现文件入库
 						controller.Upload, //实现可跨项目使用的文件上云工具类
 					)
-					//group.Middleware(service.Middleware().GTokenSetCtx, ) //for gtoken
-					//todo 优化代码 返回的数据格式和之前的一致
-					//group.ALL("/backend/admin/info", func(r *ghttp.Request) {
-					//	r.Response.WriteJson(gfAdminToken.GetTokenData(r).Data)
-					//})
 				})
 			})
 			s.Run()
@@ -94,6 +71,24 @@ var (
 		},
 	}
 )
+
+// 管理后台相关
+func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
+	gfAdminToken = &gtoken.GfToken{
+		CacheMode:        2,
+		ServerName:       "shop",
+		LoginPath:        "/backend/login",
+		LoginBeforeFunc:  loginFunc,
+		LoginAfterFunc:   loginAfterFunc,
+		LogoutPath:       "/backend/user/logout",
+		AuthPaths:        g.SliceStr{"/backend/admin/info"},
+		AuthExcludePaths: g.SliceStr{"/admin/user/info", "/admin/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
+		AuthAfterFunc:    authAfterFunc,
+		MultiLogin:       true,
+	}
+	err = gfAdminToken.Start()
+	return
+}
 
 // todo 迁移到合适的位置
 func loginFunc(r *ghttp.Request) (string, interface{}) {
