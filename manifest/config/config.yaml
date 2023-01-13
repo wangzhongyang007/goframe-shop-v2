@@ -23,7 +23,7 @@ redis:
     db: 1
     pass: f2QteFQvC6rxjjJ6
     idleTimeout: 600
-
+#todo 改成你自己的秘钥和域名地址
 qiniu:
   bucket: "x"
   accessKey: "x"
