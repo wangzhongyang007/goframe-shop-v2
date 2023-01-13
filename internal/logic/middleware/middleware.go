@@ -125,8 +125,6 @@ var GToken *gtoken.GfToken
 // Gtoken鉴权
 func (s *sMiddleware) GTokenSetCtx(r *ghttp.Request) {
 	var tokenInfo TokenInfo
-	//todo
-	g.Dump("r:", r)
 	token := GToken.GetTokenData(r)
 	g.Dump("token:", token)
 	err := gconv.Struct(token.GetString("data"), &tokenInfo)

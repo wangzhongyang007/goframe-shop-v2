@@ -118,13 +118,6 @@ func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *
 	if err != nil {
 		return out, err
 	}
-	// Admin
-	//指定item的键名用：ScanList
-	//todo 注释掉
-	//if err := listModel.ScanList(&out.List, "Admin"); err != nil {
-	//	return out, err
-	//}
-
 	//不指定item的键名用：Scan
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
@@ -133,13 +126,6 @@ func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *
 }
 
 func (s *sAdmin) GetAdminByNamePassword(ctx context.Context, in model.UserLoginInput) map[string]interface{} {
-	//todo 对接DB
-	//if in.Name == "admin" && in.Password == "admin" {
-	//	return g.Map{
-	//		"id":       1,
-	//		"username": "admin",
-	//	}
-	//}
 	//验证账号密码是否正确
 	adminInfo := entity.AdminInfo{}
 	err := dao.AdminInfo.Ctx(ctx).Where("name", in.Name).Scan(&adminInfo)
