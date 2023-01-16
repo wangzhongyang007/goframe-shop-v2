@@ -2,8 +2,6 @@ package position
 
 import (
 	"context"
-	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/encoding/ghtml"
 	"github.com/gogf/gf/v2/frame/g"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model"
@@ -11,73 +9,63 @@ import (
 	"goframe-shop-v2/internal/service"
 )
 
-type sPosition struct{}
+type sCategory struct{}
 
 func init() {
-	service.RegisterPosition(New())
+	service.RegisterCategory(New())
 }
 
-func New() *sPosition {
-	return &sPosition{}
+func New() *sCategory {
+	return &sCategory{}
 }
 
-func (s *sPosition) Create(ctx context.Context, in model.PositionCreateInput) (out model.PositionCreateOutput, err error) {
-	// 不允许HTML代码
-	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
-		return out, err
-	}
-	lastInsertID, err := dao.PositionInfo.Ctx(ctx).Data(in).InsertAndGetId()
+func (s *sCategory) Create(ctx context.Context, in model.CategoryCreateInput) (out model.CategoryCreateOutput, err error) {
+	lastInsertID, err := dao.CategoryInfo.Ctx(ctx).Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err
 	}
-	return model.PositionCreateOutput{PositionId: int(lastInsertID)}, err
+	return model.CategoryCreateOutput{CategoryId: int(lastInsertID)}, err
 }
 
 // Delete 删除
-func (s *sPosition) Delete(ctx context.Context, id uint) error {
-	return dao.PositionInfo.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
-		// 删除内容
-		_, err := dao.PositionInfo.Ctx(ctx).Where(g.Map{
-			dao.PositionInfo.Columns().Id: id,
-		}).Delete()
+func (s *sCategory) Delete(ctx context.Context, id uint) (err error) {
+	_, err = dao.CategoryInfo.Ctx(ctx).Where(g.Map{
+		dao.CategoryInfo.Columns().Id: id,
+	}).Delete()
+	if err != nil {
 		return err
-	})
+	}
+	return
 }
 
 // Update 修改
-func (s *sPosition) Update(ctx context.Context, in model.PositionUpdateInput) error {
-	return dao.PositionInfo.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
-		// 不允许HTML代码
-		if err := ghtml.SpecialCharsMapOrStruct(in); err != nil {
-			return err
-		}
-		_, err := dao.PositionInfo.
-			Ctx(ctx).
-			Data(in).
-			FieldsEx(dao.PositionInfo.Columns().Id).
-			Where(dao.PositionInfo.Columns().Id, in.Id).
-			Update()
-		return err
-	})
+func (s *sCategory) Update(ctx context.Context, in model.CategoryUpdateInput) error {
+	_, err := dao.CategoryInfo.
+		Ctx(ctx).
+		Data(in).
+		FieldsEx(dao.CategoryInfo.Columns().Id).
+		Where(dao.CategoryInfo.Columns().Id, in.Id).
+		Update()
+	return err
 }
 
-// GetList 查询内容列表
-func (s *sPosition) GetList(ctx context.Context, in model.PositionGetListInput) (out *model.PositionGetListOutput, err error) {
+// GetList 查询分类列表
+func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error) {
 	var (
-		m = dao.PositionInfo.Ctx(ctx)
+		m = dao.CategoryInfo.Ctx(ctx)
 	)
-	out = &model.PositionGetListOutput{
+	out = &model.CategoryGetListOutput{
 		Page: in.Page,
 		Size: in.Size,
 	}
 
-	// 分配查询
+	// 分页查询
 	listModel := m.Page(in.Page, in.Size)
 	// 排序方式
-	listModel = listModel.OrderDesc(dao.PositionInfo.Columns().Sort)
+	listModel = listModel.OrderDesc(dao.CategoryInfo.Columns().Sort)
 
 	// 执行查询
-	var list []*entity.PositionInfo
+	var list []*entity.CategoryInfo
 	if err := listModel.Scan(&list); err != nil {
 		return out, err
 	}
@@ -89,10 +77,6 @@ func (s *sPosition) GetList(ctx context.Context, in model.PositionGetListInput) 
 	if err != nil {
 		return out, err
 	}
-	// Position
-	//指定item的键名用：ScanList
-	//if err := listModel.ScanList(&out.List, "Position"); err != nil {
-	//不指定item的键名用：Scan
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
 	}

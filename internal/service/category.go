@@ -11,25 +11,25 @@ import (
 )
 
 type (
-	IPosition interface {
-		Create(ctx context.Context, in model.PositionCreateInput) (out model.PositionCreateOutput, err error)
-		Delete(ctx context.Context, id uint) error
-		Update(ctx context.Context, in model.PositionUpdateInput) error
-		GetList(ctx context.Context, in model.PositionGetListInput) (out *model.PositionGetListOutput, err error)
+	ICategory interface {
+		Create(ctx context.Context, in model.CategoryCreateInput) (out model.CategoryCreateOutput, err error)
+		Delete(ctx context.Context, id uint) (err error)
+		Update(ctx context.Context, in model.CategoryUpdateInput) error
+		GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error)
 	}
 )
 
 var (
-	localPosition IPosition
+	localCategory ICategory
 )
 
-func Position() IPosition {
-	if localPosition == nil {
-		panic("implement not found for interface IPosition, forgot register?")
+func Category() ICategory {
+	if localCategory == nil {
+		panic("implement not found for interface ICategory, forgot register?")
 	}
-	return localPosition
+	return localCategory
 }
 
-func RegisterPosition(i IPosition) {
-	localPosition = i
+func RegisterCategory(i ICategory) {
+	localCategory = i
 }
