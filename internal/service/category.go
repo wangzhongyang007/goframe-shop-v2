@@ -16,6 +16,7 @@ type (
 		Delete(ctx context.Context, id uint) (err error)
 		Update(ctx context.Context, in model.CategoryUpdateInput) error
 		GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error)
+		GetListAll(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error)
 	}
 )
 

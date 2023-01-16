@@ -82,3 +82,33 @@ func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) 
 	}
 	return
 }
+
+// GetList 查询分类全部信息-不翻页
+func (s *sCategory) GetListAll(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error) {
+	var (
+		m = dao.CategoryInfo.Ctx(ctx)
+	)
+	out = &model.CategoryGetListOutput{}
+
+	listModel := m
+	// 排序方式
+	listModel = listModel.OrderDesc(dao.CategoryInfo.Columns().Sort)
+
+	// 执行查询
+	var list []*entity.CategoryInfo
+	if err := listModel.Scan(&list); err != nil {
+		return out, err
+	}
+	// 没有数据
+	if len(list) == 0 {
+		return out, nil
+	}
+	out.Total, err = m.Count()
+	if err != nil {
+		return out, err
+	}
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
+	}
+	return
+}

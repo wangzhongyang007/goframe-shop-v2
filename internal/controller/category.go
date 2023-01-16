@@ -63,3 +63,13 @@ func (a *cCategory) List(ctx context.Context, req *backend.CategoryGetListCommon
 		Size:  getListRes.Size,
 		Total: getListRes.Total}, nil
 }
+
+func (a *cCategory) ListAll(ctx context.Context, req *backend.CategoryGetListAllCommonReq) (res *backend.CategoryGetListAllCommonRes, err error) {
+	getListRes, err := service.Category().GetListAll(ctx, model.CategoryGetListInput{})
+	if err != nil {
+		return nil, err
+	}
+
+	return &backend.CategoryGetListAllCommonRes{List: getListRes.List,
+		Total: getListRes.Total}, nil
+}
