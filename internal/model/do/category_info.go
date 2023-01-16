@@ -16,9 +16,9 @@ type CategoryInfo struct {
 	ParentId  interface{} // 父级id
 	Name      interface{} //
 	PicUrl    interface{} // icon
-	DeletedAt *gtime.Time //
-	CreatedAt *gtime.Time //
-	UpdatedAt *gtime.Time //
 	Level     interface{} // 等级 默认1级分类
 	Sort      interface{} //
+	CreatedAt *gtime.Time //
+	UpdatedAt *gtime.Time //
+	DeletedAt *gtime.Time //
 }

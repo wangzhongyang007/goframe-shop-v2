@@ -14,9 +14,9 @@ type CategoryInfo struct {
 	ParentId  int         `json:"parentId"  description:"父级id"`
 	Name      string      `json:"name"      description:""`
 	PicUrl    string      `json:"picUrl"    description:"icon"`
-	DeletedAt *gtime.Time `json:"deletedAt" description:""`
-	CreatedAt *gtime.Time `json:"createdAt" description:""`
-	UpdatedAt *gtime.Time `json:"updatedAt" description:""`
 	Level     int         `json:"level"     description:"等级 默认1级分类"`
 	Sort      int         `json:"sort"      description:""`
+	CreatedAt *gtime.Time `json:"createdAt" description:""`
+	UpdatedAt *gtime.Time `json:"updatedAt" description:""`
+	DeletedAt *gtime.Time `json:"deletedAt" description:""`
 }
