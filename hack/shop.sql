@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 25/11/2022 18:01:49
+ Date: 16/01/2023 11:47:30
 */
 
 SET NAMES utf8mb4;
@@ -42,7 +42,6 @@ CREATE TABLE `admin_info` (
   `role_ids` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '角色ids',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
   `user_salt` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '加密盐',
   `is_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否超级管理员',
   PRIMARY KEY (`id`) USING BTREE,
@@ -53,10 +52,10 @@ CREATE TABLE `admin_info` (
 -- Records of admin_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_info` VALUES (1, 'zhangsan', 'e91474a50e96e9e3b0c7df489b1c0a21', '2', '2022-09-25 16:40:43', '2022-11-20 11:06:01', '2022-11-20 11:06:29', 'e3oHjweGEc', 0);
-INSERT INTO `admin_info` VALUES (3, 'wangzhongyang', '7382e435a4eb141adeabc3792d383e1c', '2', '2022-07-19 10:50:20', '2022-11-23 14:25:10', NULL, '4f8WG1bjne', 0);
-INSERT INTO `admin_info` VALUES (13, '李四', '9076805c0efa82a164f0c4f2a2818851', '1', '2022-11-20 11:03:35', '2022-11-20 11:03:35', NULL, 'Io45dMSb4e', 1);
-INSERT INTO `admin_info` VALUES (15, 'zhaoliu', 'd82abc6395e1c89e7837f96407cf6d5d', '2', '2022-11-20 13:45:09', '2022-11-20 13:45:49', '2022-11-20 13:46:10', 'aHzOD3zI7L', 0);
+INSERT INTO `admin_info` VALUES (1, 'zhangsan', 'e91474a50e96e9e3b0c7df489b1c0a21', '2', '2022-09-25 16:40:43', '2022-11-20 11:06:01', 'e3oHjweGEc', 0);
+INSERT INTO `admin_info` VALUES (3, 'wangzhongyang', '7382e435a4eb141adeabc3792d383e1c', '2', '2022-07-19 10:50:20', '2022-11-23 14:25:10', '4f8WG1bjne', 0);
+INSERT INTO `admin_info` VALUES (13, '李四', '9076805c0efa82a164f0c4f2a2818851', '1', '2022-11-20 11:03:35', '2022-11-20 11:03:35', 'Io45dMSb4e', 1);
+INSERT INTO `admin_info` VALUES (15, 'zhaoliu', 'd82abc6395e1c89e7837f96407cf6d5d', '2', '2022-11-20 13:45:09', '2022-11-20 13:45:49', 'aHzOD3zI7L', 0);
 COMMIT;
 
 -- ----------------------------
@@ -124,25 +123,26 @@ CREATE TABLE `category_info` (
   `parent_id` int NOT NULL DEFAULT '0' COMMENT '父级id',
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `pic_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'icon',
-  `deleted_at` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
   `level` tinyint(1) NOT NULL DEFAULT '1' COMMENT '等级 默认1级分类',
   `sort` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
 
 -- ----------------------------
 -- Records of category_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `category_info` VALUES (1, 0, '家用电器', '', NULL, NULL, NULL, 1, 1);
-INSERT INTO `category_info` VALUES (2, 1, '电视', '', NULL, NULL, NULL, 2, 1);
-INSERT INTO `category_info` VALUES (3, 2, '全面屏电视', '', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (4, 2, '教育电视', '', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (5, 1, '智慧屏电视', '', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (6, 0, '手机/数码', '', NULL, '2022-07-27 15:07:31', '2022-07-27 15:08:57', 1, 2);
-INSERT INTO `category_info` VALUES (7, 6, '手机通讯', '', NULL, '2022-07-27 15:08:41', '2022-07-27 15:09:34', 2, 2);
+INSERT INTO `category_info` VALUES (1, 0, '家用电器', '', 1, 1, NULL, NULL, NULL);
+INSERT INTO `category_info` VALUES (2, 1, '电视', '', 2, 1, NULL, NULL, NULL);
+INSERT INTO `category_info` VALUES (3, 2, '全面屏电视', '', 3, 1, NULL, NULL, NULL);
+INSERT INTO `category_info` VALUES (4, 2, '教育电视', '', 3, 1, NULL, NULL, NULL);
+INSERT INTO `category_info` VALUES (5, 1, '智慧屏电视', '', 3, 1, NULL, NULL, NULL);
+INSERT INTO `category_info` VALUES (6, 0, '手机/数码', '', 1, 2, '2022-07-27 15:07:31', '2022-07-27 15:08:57', NULL);
+INSERT INTO `category_info` VALUES (7, 66, '111', 'http://dummyimage.com/400x400', 62, 26, '2022-07-27 15:08:41', '2023-01-13 21:25:55', NULL);
+INSERT INTO `category_info` VALUES (8, 9, '理收每从最想', 'http://dummyimage.com/400x400', 68, 99, '2023-01-13 21:17:33', '2023-01-13 21:17:33', '2023-01-13 21:19:07');
 COMMIT;
 
 -- ----------------------------
@@ -236,7 +236,7 @@ CREATE TABLE `coupon_info` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
 
 -- ----------------------------
 -- Records of coupon_info
@@ -255,7 +255,31 @@ INSERT INTO `coupon_info` VALUES (10, '满2千减5百优惠券', 50000, '0', 1, 
 INSERT INTO `coupon_info` VALUES (11, '满2千减5百优惠券', 50000, '0', 1, '2022-09-25 15:32:40', '2022-09-25 15:32:40', NULL);
 INSERT INTO `coupon_info` VALUES (12, '满2千减5百优惠券', 50000, '0', 1, '2022-09-25 15:33:23', '2022-09-25 15:33:23', NULL);
 INSERT INTO `coupon_info` VALUES (13, '满2千减5百优惠券', 50000, '0', 1, '2022-09-25 15:33:54', '2022-09-25 15:33:54', NULL);
-INSERT INTO `coupon_info` VALUES (14, '满2千减5百优惠券', 50000, '1,2,3', 1, '2022-09-25 15:36:12', '2022-09-25 15:36:12', NULL);
+INSERT INTO `coupon_info` VALUES (14, '造标争级满', 82, '1,2,3', 44, '2022-09-25 15:36:12', '2023-01-16 11:43:21', NULL);
+INSERT INTO `coupon_info` VALUES (15, '土切装则', 13, '', 34, '2023-01-16 11:37:06', '2023-01-16 11:37:06', '2023-01-16 11:40:52');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for file_info
+-- ----------------------------
+DROP TABLE IF EXISTS `file_info`;
+CREATE TABLE `file_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '图片名称',
+  `src` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '本地文件存储路径',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'URL地址',
+  `user_id` int NOT NULL DEFAULT '0' COMMENT '用户id',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of file_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `file_info` VALUES (1, 'cpk2opce3094xdzlc4.png', 'upload/20230105/cpk2opce3094xdzlc4.png', '/upload/20230105/cpk2opce3094xdzlc4.png', 15, '2023-01-05 15:19:44', '2023-01-05 15:19:44');
+INSERT INTO `file_info` VALUES (2, 'cpk2rynqpzowhwzsre.png', 'upload/20230105/cpk2rynqpzowhwzsre.png', '/upload/20230105/cpk2rynqpzowhwzsre.png', 15, '2023-01-05 15:23:59', '2023-01-05 15:23:59');
 COMMIT;
 
 -- ----------------------------
@@ -374,12 +398,12 @@ CREATE TABLE `order_info` (
 BEGIN;
 INSERT INTO `order_info` VALUES (1, '1659231316407832000111', 1, 1, '2022-08-27 09:35:16', '2022-07-31 09:35:16', '0', NULL, 1, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 100, 9900);
 INSERT INTO `order_info` VALUES (2, '1659231554317361000757', 1, 1, '2022-07-31 09:39:14', '2022-07-31 09:39:14', '0', NULL, 1, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 200, 9800);
-INSERT INTO `order_info` VALUES (3, '1661603467832912000516', 1, 0, '2022-08-27 20:31:07', '2022-08-27 20:31:07', '', NULL, 0, '', '', '', 0, 0, 0);
-INSERT INTO `order_info` VALUES (4, '1661603562656619000513', 1, 1, '2022-08-27 20:32:42', '2022-08-27 20:32:42', '放到快递柜就可以，不用打电话。', NULL, 0, '王先生', '13269477432', '北京丰台汽车博物馆', 0, 0, 0);
-INSERT INTO `order_info` VALUES (5, '1661604424031843000546', 1, 0, '2022-08-27 20:47:04', '2022-08-27 20:47:04', '', NULL, 0, '', '', '', 0, 0, 0);
-INSERT INTO `order_info` VALUES (6, '1661604530142913000770', 1, 1, '2022-08-27 20:48:50', '2022-08-27 20:48:50', '这是备注', NULL, 1, '', '', '', 100, 0, 0);
-INSERT INTO `order_info` VALUES (7, '166160461284091500027', 1, 1, '2022-09-08 20:50:12', '2022-08-27 20:50:12', '这是备注', '2022-09-09 11:51:21', 1, '', '', '', 100, 0, 9800);
-INSERT INTO `order_info` VALUES (8, '166160465089079000090', 1, 1, '2022-09-09 20:50:50', '2022-08-27 20:50:50', '这是备注', '2022-09-09 11:51:17', 1, '', '', '', 100, 0, 9800);
+INSERT INTO `order_info` VALUES (3, '1661603467832912000516', 1, 0, '2022-12-08 20:31:07', '2022-08-27 20:31:07', '', '2022-12-13 21:52:26', 0, '', '', '', 0, 0, 0);
+INSERT INTO `order_info` VALUES (4, '1661603562656619000513', 1, 1, '2022-12-09 20:32:42', '2022-08-27 20:32:42', '放到快递柜就可以，不用打电话。', '2022-12-13 21:52:19', 0, '王先生', '13269477432', '北京丰台汽车博物馆', 0, 0, 0);
+INSERT INTO `order_info` VALUES (5, '1661604424031843000546', 1, 0, '2022-12-10 20:47:04', '2022-08-27 20:47:04', '', '2022-12-13 21:52:12', 0, '', '', '', 0, 0, 0);
+INSERT INTO `order_info` VALUES (6, '1661604530142913000770', 1, 1, '2022-12-11 20:48:50', '2022-08-27 20:48:50', '这是备注', '2022-12-13 21:52:05', 1, '', '', '', 100, 0, 0);
+INSERT INTO `order_info` VALUES (7, '166160461284091500027', 1, 1, '2022-12-12 20:50:50', '2022-08-27 20:50:12', '这是备注', '2022-12-13 21:51:58', 1, '', '', '', 100, 0, 9800);
+INSERT INTO `order_info` VALUES (8, '166160465089079000090', 1, 1, '2022-12-19 20:50:50', '2022-08-27 20:50:50', '这是备注', '2022-12-19 13:14:07', 1, '', '', '', 100, 0, 9800);
 COMMIT;
 
 -- ----------------------------
@@ -393,8 +417,9 @@ CREATE TABLE `permission_info` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_name` (`name`) COMMENT '名称唯一索引'
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of permission_info
@@ -402,6 +427,8 @@ CREATE TABLE `permission_info` (
 BEGIN;
 INSERT INTO `permission_info` VALUES (1, '文章1', 'admin.article.index', '2022-09-25 15:03:01', '2022-09-25 15:03:43', NULL);
 INSERT INTO `permission_info` VALUES (2, '测试2', 'admin.test.index', NULL, NULL, NULL);
+INSERT INTO `permission_info` VALUES (5, '商品3', 'admin/goods', '2022-12-26 19:51:44', '2022-12-26 19:52:29', NULL);
+INSERT INTO `permission_info` VALUES (6, '商品2', 'admin/goods', '2022-12-26 19:52:01', '2022-12-26 19:52:01', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -486,14 +513,16 @@ CREATE TABLE `role_info` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_index` (`name`) USING BTREE COMMENT '角色昵称唯一索引'
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of role_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `role_info` VALUES (1, '运营', '运营权限', '2022-09-25 10:35:52', '2022-09-25 10:35:52', NULL);
+INSERT INTO `role_info` VALUES (1, '运营1', '测试', '2022-09-25 10:35:52', '2022-12-24 10:51:24', NULL);
+INSERT INTO `role_info` VALUES (3, '运营', '', '2022-12-21 10:43:33', '2022-12-21 10:43:33', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -530,7 +559,6 @@ CREATE TABLE `rotation_info` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `rotation_info` VALUES (1, '111', '11', 10, '2022-07-19 04:53:01', '2022-07-19 04:59:24', NULL);
-INSERT INTO `rotation_info` VALUES (2, '2', 'https://wx.zsxq.com/dweb2/index/group/15528828844882', 0, '2022-07-19 05:15:20', '2022-11-13 09:53:27', NULL);
 COMMIT;
 
 -- ----------------------------
