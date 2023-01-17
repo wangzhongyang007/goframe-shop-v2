@@ -30,7 +30,6 @@ var (
 				)
 				//不需要登录的路由组绑定
 				group.Bind(
-					controller.Hello,        //示例
 					controller.Rotation,     // 轮播图
 					controller.Position,     // 手工位
 					controller.Admin.Create, // 管理员
@@ -59,6 +58,7 @@ var (
 						controller.UserCoupon,   //商品优惠券管理
 						controller.Goods,        //商品管理
 						controller.GoodsOptions, //商品规格管理
+						controller.Article,      //文章管理&CMS
 					)
 				})
 			})
