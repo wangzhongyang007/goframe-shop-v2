@@ -86,7 +86,8 @@ var (
 					}
 					//需要登录鉴权的接口放到这里
 					group.Bind(
-						controller.User.Info, //当前登录用户的信息
+						controller.User.Info,           //当前登录用户的信息
+						controller.User.UpdatePassword, //当前用户修改密码
 					)
 				})
 			})

@@ -13,6 +13,7 @@ import (
 type (
 	IUser interface {
 		Register(ctx context.Context, in model.RegisterInput) (out model.RegisterOutput, err error)
+		UpdatePassword(ctx context.Context, in model.UpdatePasswordInput) (out model.UpdatePasswordOutput, err error)
 	}
 )
 
