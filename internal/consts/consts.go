@@ -10,16 +10,25 @@ const (
 	FileMaxUploadCountMinute = 10                   // 同一用户1分钟之内最大上传数量
 	GTokenAdminPrefix        = "Admin:"             //gtoken登录 管理后台 前缀区分
 	GTokenFrontendPrefix     = "User:"              //gtoken登录 前台用户 前缀区分
-	CtxAdminId               = "CtxAdminId"
-	CtxAdminName             = "CtxAdminName"
-	CtxAdminIsAdmin          = "CtxAdminIsAdmin"
-	CtxAdminRoleIds          = "CtxAdminRoleIds"
-	TokenType                = "Bearer"
-	CacheModeRedis           = 2
-	BackendServerName        = "开源电商系统"
-	MultiLogin               = true
-	FrontendMultiLogin       = true
-	GTokenExpireIn           = 10 * 24 * 60 * 60
+	//for admin
+	CtxAdminId      = "CtxAdminId"
+	CtxAdminName    = "CtxAdminName"
+	CtxAdminIsAdmin = "CtxAdminIsAdmin"
+	CtxAdminRoleIds = "CtxAdminRoleIds"
+	//for user
+	CtxUserId     = "CtxUserId"
+	CtxUserName   = "CtxUserName"
+	CtxUserAvatar = "CtxUserAvatar"
+	CtxUserSex    = "CtxUserSex"
+	CtxUserSign   = "CtxUserSign"
+	CtxUserStatus = "CtxUserStatus"
+	//for 登录相关
+	TokenType          = "Bearer"
+	CacheModeRedis     = 2
+	BackendServerName  = "开源电商系统"
+	MultiLogin         = true
+	FrontendMultiLogin = true
+	GTokenExpireIn     = 10 * 24 * 60 * 60
 	//统一管理错误提示
 	CodeMissingParameterMsg = "请检查是否缺少参数"
 	ErrLoginFaulMsg         = "登录失败，账号或密码错误"

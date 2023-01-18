@@ -47,7 +47,7 @@ func StartFrontendGToken() (gfFrontendToken *gtoken.GfToken, err error) {
 		LogoutPath:      "/user/logout",
 		//AuthPaths:        g.SliceStr{"/backend/admin/info"},
 		//AuthExcludePaths: g.SliceStr{"/admin/user/info", "/admin/system/user/info"}, // 不拦截路径 /user/info,/system/user/info,/system/user,
-		AuthAfterFunc: authAfterFunc,
+		AuthAfterFunc: authAfterFuncFrontend,
 		MultiLogin:    consts.FrontendMultiLogin,
 	}
 	//todo 去掉全局校验，只用cmd中的路由组校验
@@ -174,11 +174,11 @@ func loginAfterFuncFrontend(r *ghttp.Request, respData gtoken.Resp) {
 			Type:     consts.TokenType,
 			Token:    respData.GetString("token"),
 			ExpireIn: consts.GTokenExpireIn, //单位秒,
-			Name:     userInfo.Name,
-			Avatar:   userInfo.Avatar,
-			Sign:     userInfo.Sign,
-			Status:   uint8(userInfo.Status),
 		}
+		data.Name = userInfo.Name
+		data.Avatar = userInfo.Avatar
+		data.Sign = userInfo.Sign
+		data.Status = uint8(userInfo.Status)
 		response.JsonExit(r, 0, "", data)
 	}
 	return
@@ -196,5 +196,22 @@ func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	r.SetCtxVar(consts.CtxAdminName, adminInfo.Name)
 	r.SetCtxVar(consts.CtxAdminIsAdmin, adminInfo.IsAdmin)
 	r.SetCtxVar(consts.CtxAdminRoleIds, adminInfo.RoleIds)
+	r.Middleware.Next()
+}
+
+func authAfterFuncFrontend(r *ghttp.Request, respData gtoken.Resp) {
+	var userInfo entity.UserInfo
+	err := gconv.Struct(respData.GetString("data"), &userInfo)
+	if err != nil {
+		response.Auth(r)
+		return
+	}
+
+	r.SetCtxVar(consts.CtxUserId, userInfo.Id)
+	r.SetCtxVar(consts.CtxUserName, userInfo.Name)
+	r.SetCtxVar(consts.CtxUserAvatar, userInfo.Avatar)
+	r.SetCtxVar(consts.CtxUserSex, userInfo.Sex)
+	r.SetCtxVar(consts.CtxUserSign, userInfo.Sign)
+	r.SetCtxVar(consts.CtxUserStatus, userInfo.Status)
 	r.Middleware.Next()
 }
