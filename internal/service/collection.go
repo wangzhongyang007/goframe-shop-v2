@@ -11,23 +11,24 @@ import (
 )
 
 type (
-	IColletion interface {
+	ICollection interface {
 		AddCollection(ctx context.Context, in model.AddCollectionInput) (res *model.AddCollectionOutput, err error)
 		DeleteCollection(ctx context.Context, in model.DeleteCollectionInput) (res *model.DeleteCollectionOutput, err error)
+		GetList(ctx context.Context, in model.CollectionListInput) (out *model.CollectionListOutput, err error)
 	}
 )
 
 var (
-	localColletion IColletion
+	localCollection ICollection
 )
 
-func Colletion() IColletion {
-	if localColletion == nil {
-		panic("implement not found for interface IColletion, forgot register?")
+func Collection() ICollection {
+	if localCollection == nil {
+		panic("implement not found for interface ICollection, forgot register?")
 	}
-	return localColletion
+	return localCollection
 }
 
-func RegisterColletion(i IColletion) {
-	localColletion = i
+func RegisterCollection(i ICollection) {
+	localCollection = i
 }
