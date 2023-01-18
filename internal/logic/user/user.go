@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"errors"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/grand"
 	"goframe-shop-v2/internal/consts"
@@ -48,8 +47,6 @@ func (*sUser) UpdatePassword(ctx context.Context, in model.UpdatePasswordInput) 
 		return model.UpdatePasswordOutput{}, err
 	}
 	if gconv.String(userInfo.SecretAnswer) != in.SecretAnswer {
-		g.Dump("userInfo.SecretAnswer:", userInfo.SecretAnswer)
-		g.Dump("in.SecretAnswer:", in.SecretAnswer)
 		return out, errors.New(consts.ErrSecretAnswerMsg)
 	}
 	userSalt := grand.S(10)

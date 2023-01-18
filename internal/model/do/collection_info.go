@@ -13,8 +13,8 @@ import (
 type CollectionInfo struct {
 	g.Meta    `orm:"table:collection_info, do:true"`
 	Id        interface{} //
-	UserId    interface{} //
-	ObjectId  interface{} //
+	UserId    interface{} // 用户id
+	ObjectId  interface{} // 对象id
 	Type      interface{} // 收藏类型：1商品 2文章
 	CreatedAt *gtime.Time //
 	UpdatedAt *gtime.Time //
