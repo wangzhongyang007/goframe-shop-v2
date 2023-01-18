@@ -14,3 +14,8 @@ type RegisterInput struct {
 type RegisterOutput struct {
 	Id uint
 }
+
+type LoginInput struct {
+	Name     string `json:"name"         description:"用户名" v:"required#用户名必填"`
+	Password string `json:"password"     description:"密码" v:"password"`
+}

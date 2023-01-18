@@ -9,13 +9,16 @@ const (
 	ContextKey               = "ContextKey"         // 上下文变量存储键名，前后端系统共享
 	FileMaxUploadCountMinute = 10                   // 同一用户1分钟之内最大上传数量
 	GTokenAdminPrefix        = "Admin:"             //gtoken登录 管理后台 前缀区分
+	GTokenFrontendPrefix     = "User:"              //gtoken登录 前台用户 前缀区分
 	CtxAdminId               = "CtxAdminId"
 	CtxAdminName             = "CtxAdminName"
 	CtxAdminIsAdmin          = "CtxAdminIsAdmin"
 	CtxAdminRoleIds          = "CtxAdminRoleIds"
+	TokenType                = "Bearer"
 	CacheModeRedis           = 2
 	BackendServerName        = "开源电商系统"
 	MultiLogin               = true
+	FrontendMultiLogin       = true
 	GTokenExpireIn           = 10 * 24 * 60 * 60
 	//统一管理错误提示
 	CodeMissingParameterMsg = "请检查是否缺少参数"
