@@ -21,5 +21,6 @@ import (
 	_ "goframe-shop-v2/internal/logic/role"
 	_ "goframe-shop-v2/internal/logic/rotation"
 	_ "goframe-shop-v2/internal/logic/session"
+	_ "goframe-shop-v2/internal/logic/user"
 	_ "goframe-shop-v2/internal/logic/user_coupon"
 )
