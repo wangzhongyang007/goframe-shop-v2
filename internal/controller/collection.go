@@ -44,6 +44,7 @@ func (a *cCollection) List(ctx context.Context, req *frontend.ListCollectionReq)
 	getListRes, err := service.Collection().GetList(ctx, model.CollectionListInput{
 		Page: req.Page,
 		Size: req.Size,
+		Type: req.Type,
 	})
 	if err != nil {
 		return nil, err

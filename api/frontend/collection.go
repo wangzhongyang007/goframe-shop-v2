@@ -26,6 +26,7 @@ type DeleteCollectionRes struct {
 
 type ListCollectionReq struct {
 	g.Meta `path:"/collection/list" method:"post" tags:"前台收藏" summary:"收藏列表"`
+	Type   uint8 `json:"type" v:"in:0,1,2" dc:"收藏类型"`
 	CommonPaginationReq
 }
 
