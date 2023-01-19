@@ -77,6 +77,7 @@ var (
 				//不需要登录的路由组绑定
 				group.Bind(
 					controller.User.Register, //用户注册
+					controller.Goods,         //商品
 				)
 				//需要登录鉴权的路由组
 				group.Group("/", func(group *ghttp.RouterGroup) {

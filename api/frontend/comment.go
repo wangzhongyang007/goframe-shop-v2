@@ -1,6 +1,9 @@
 package frontend
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
+)
 
 type AddCommentReq struct {
 	g.Meta   `path:"/add/comment" in:"post" method:"post" tags:"前台评论" summary:"添加评论"`
@@ -43,4 +46,15 @@ type ListCommentItem struct {
 	Type     int         `json:"type"      description:"评论类型：1商品 2文章"`
 	Goods    interface{} `json:"goods"`
 	Article  interface{} `json:"article"`
+}
+
+type CommentBase struct {
+	Id        int          `json:"id"        description:""`
+	ParentId  int          `json:"parent_id"  description:"父级评论id"`
+	UserId    int          `json:"user_id"    description:""`
+	User      UserInfoBase `json:"user" dc:"用户信息"`
+	ObjectId  int          `json:"object_id"  description:""`
+	Type      int          `json:"type"      description:"评论类型：1商品 2文章"`
+	Content   string       `json:"content"   description:"评论内容"`
+	CreatedAt *gtime.Time  `json:"created_at" description:""`
 }
