@@ -67,3 +67,10 @@ type ArticleItem struct {
 	Desc   string `json:"desc"`
 	PicUrl string `json:"pic_url"`
 }
+
+// 校验当前用户是否收藏
+type CheckIsCollectInput struct {
+	UserId   uint
+	ObjectId uint
+	Type     uint8
+}

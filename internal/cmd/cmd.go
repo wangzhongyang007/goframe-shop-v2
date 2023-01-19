@@ -89,6 +89,7 @@ var (
 						controller.User.Info,           //当前登录用户的信息
 						controller.User.UpdatePassword, //当前用户修改密码
 						controller.Collection,          //收藏
+						controller.Praise,              //收藏
 					)
 				})
 			})

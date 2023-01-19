@@ -36,4 +36,7 @@ const (
 	//收藏相关
 	CollectionTypeGoods   = 1
 	CollectionTypeArticle = 2
+	//点赞相关
+	PraiseTypeGoods   = 1
+	PraiseTypeArticle = 2
 )
