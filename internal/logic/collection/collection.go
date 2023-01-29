@@ -64,9 +64,7 @@ func (*sCollection) GetList(ctx context.Context, in model.CollectionListInput) (
 	// 翻页查询
 	listModel := m.Page(in.Page, in.Size)
 	// 条件查询
-	if in.Type != 0 {
-		listModel = listModel.Where(dao.CollectionInfo.Columns().Type, in.Type)
-	}
+	listModel = listModel.Where(dao.CollectionInfo.Columns().Type, in.Type)
 	//优化：优先查询count 而不是像之前一样查sql结果赋值到结构体中
 	out.Total, err = listModel.Count()
 	if err != nil {
@@ -82,10 +80,6 @@ func (*sCollection) GetList(ctx context.Context, in model.CollectionListInput) (
 		}
 	} else if in.Type == consts.CollectionTypeArticle {
 		if err := listModel.With(model.ArticleItem{}).Scan(&out.List); err != nil {
-			return out, err
-		}
-	} else {
-		if err := listModel.WithAll().Scan(&out.List); err != nil {
 			return out, err
 		}
 	}
