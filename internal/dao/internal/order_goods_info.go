@@ -24,13 +24,10 @@ type OrderGoodsInfoColumns struct {
 	OrderId     string // 关联的主订单表
 	GoodsId     string // 商品id
 	Count       string // 商品数量
-	PayType     string // 支付方式 1微信 2支付宝 3云闪付
 	Remark      string // 备注
-	Status      string // 订单状态 0待支付 1已支付 3已确认收货
 	Price       string // 订单金额 单位分
 	CouponPrice string // 优惠券金额 单位分
 	ActualPrice string // 实际支付金额 单位分
-	PayAt       string // 支付时间
 	CreatedAt   string //
 	UpdatedAt   string //
 }
@@ -41,13 +38,10 @@ var orderGoodsInfoColumns = OrderGoodsInfoColumns{
 	OrderId:     "order_id",
 	GoodsId:     "goods_id",
 	Count:       "count",
-	PayType:     "pay_type",
 	Remark:      "remark",
-	Status:      "status",
 	Price:       "price",
 	CouponPrice: "coupon_price",
 	ActualPrice: "actual_price",
-	PayAt:       "pay_at",
 	CreatedAt:   "created_at",
 	UpdatedAt:   "updated_at",
 }

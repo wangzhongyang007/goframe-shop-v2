@@ -12,7 +12,10 @@ import (
 
 type (
 	IAddress interface {
-		GetList(ctx context.Context) (out *model.CityAddressListOutput, err error)
+		Add(ctx context.Context, in model.AddAddressInput) (out *model.AddAddressOutput, err error)
+		Update(ctx context.Context, in model.UpdateAddressInput) (err error)
+		Delete(ctx context.Context, id int) (err error)
+		Page(ctx context.Context, in model.PageAddressInput) (out *model.PageAddressOutput, err error)
 	}
 )
 
