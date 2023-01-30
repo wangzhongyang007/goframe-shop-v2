@@ -16,6 +16,7 @@ type (
 		Update(ctx context.Context, in model.UpdateAddressInput) (err error)
 		Delete(ctx context.Context, id int) (err error)
 		Page(ctx context.Context, in model.PageAddressInput) (out *model.PageAddressOutput, err error)
+		GetCityList(ctx context.Context) (out *model.CityAddressListOutput, err error)
 	}
 )
 

@@ -41,3 +41,11 @@ type PageAddressReq struct {
 type PageAddressRes struct {
 	CommonPaginationRes
 }
+
+type CityAddressListReq struct {
+	g.Meta `path:"/address/list" tags:"客户端收货地址" method:"post" summary:"客户端省市县区接口"`
+}
+
+type CityAddressListRes struct {
+	List interface{} `json:"list" description:"列表"`
+}
