@@ -28,14 +28,14 @@ type OrderGoodsInfo struct {
 	OrderId    int `json:"order_id"`
 	GoodsId    int `json:"goods_id"`
 	//商品详情
-	GoodsInfo   *goods.BaseGoodsColumns `orm:"with:id=goods_id" json:"goods_info"`
-	Count       int                     `json:"count"`
-	PayType     int                     `json:"pay_type"`
-	Remark      string                  `json:"remark"`
-	Status      int                     `json:"status"`
-	Price       int                     `json:"price"`
-	CouponPrice int                     `json:"coupon_price"`
-	ActualPrice int                     `json:"actual_price"`
-	PayAt       string                  `json:"pay_at,omitempty"`
-	TimeCommon
+	//GoodsInfo   *goods.BaseGoodsColumns `orm:"with:id=goods_id" json:"goods_info"`
+	Count       int    `json:"count"`
+	PayType     int    `json:"pay_type"`
+	Remark      string `json:"remark"`
+	Status      int    `json:"status"`
+	Price       int    `json:"price"`
+	CouponPrice int    `json:"coupon_price"`
+	ActualPrice int    `json:"actual_price"`
+	PayAt       string `json:"pay_at,omitempty"`
+	//TimeCommon
 }
