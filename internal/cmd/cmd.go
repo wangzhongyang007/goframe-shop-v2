@@ -93,6 +93,7 @@ var (
 						controller.Collection,          //收藏
 						controller.Praise,              //收藏
 						controller.Comment,             //评论
+						controller.Cart,                //购物车
 					)
 				})
 			})
