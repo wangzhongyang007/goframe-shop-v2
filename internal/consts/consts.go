@@ -42,4 +42,6 @@ const (
 	//评论相关
 	CommentTypeGoods   = 1
 	CommentTypeArticle = 2
+	//收货地址相关
+	ProvincePid = 1
 )
