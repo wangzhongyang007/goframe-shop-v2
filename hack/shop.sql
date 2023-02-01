@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `cart_info`;
 CREATE TABLE `cart_info` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '购物车表',
   `user_id` int NOT NULL DEFAULT '0',
-  `goods_id` int NOT NULL DEFAULT '0',
+  `goods_options_id` int NOT NULL DEFAULT '0',
   `count` int NOT NULL COMMENT '商品数量',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,

@@ -20,24 +20,24 @@ type CartInfoDao struct {
 
 // CartInfoColumns defines and stores column names for table cart_info.
 type CartInfoColumns struct {
-	Id        string // 购物车表
-	UserId    string //
-	GoodsId   string //
-	Count     string // 商品数量
-	CreatedAt string //
-	UpdatedAt string //
-	DeletedAt string //
+	Id             string // 购物车表
+	UserId         string //
+	GoodsOptionsId string //
+	Count          string // 商品数量
+	CreatedAt      string //
+	UpdatedAt      string //
+	DeletedAt      string //
 }
 
 // cartInfoColumns holds the columns for table cart_info.
 var cartInfoColumns = CartInfoColumns{
-	Id:        "id",
-	UserId:    "user_id",
-	GoodsId:   "goods_id",
-	Count:     "count",
-	CreatedAt: "created_at",
-	UpdatedAt: "updated_at",
-	DeletedAt: "deleted_at",
+	Id:             "id",
+	UserId:         "user_id",
+	GoodsOptionsId: "goods_options_id",
+	Count:          "count",
+	CreatedAt:      "created_at",
+	UpdatedAt:      "updated_at",
+	DeletedAt:      "deleted_at",
 }
 
 // NewCartInfoDao creates and returns a new DAO object for table data access.
