@@ -10,14 +10,18 @@ import (
 
 // OrderGoodsInfo is the golang structure for table order_goods_info.
 type OrderGoodsInfo struct {
-	Id          int         `json:"id"          description:"商品维度的订单表"`
-	OrderId     int         `json:"orderId"     description:"关联的主订单表"`
-	GoodsId     int         `json:"goodsId"     description:"商品id"`
-	Count       int         `json:"count"       description:"商品数量"`
-	Remark      string      `json:"remark"      description:"备注"`
-	Price       int         `json:"price"       description:"订单金额 单位分"`
-	CouponPrice int         `json:"couponPrice" description:"优惠券金额 单位分"`
-	ActualPrice int         `json:"actualPrice" description:"实际支付金额 单位分"`
-	CreatedAt   *gtime.Time `json:"createdAt"   description:""`
-	UpdatedAt   *gtime.Time `json:"updatedAt"   description:""`
+	Id             int         `json:"id"             description:"商品维度的订单表"`
+	OrderId        int         `json:"orderId"        description:"关联的主订单表"`
+	GoodsId        int         `json:"goodsId"        description:"商品id"`
+	GoodsOptionsId int         `json:"goodsOptionsId" description:"商品规格id"`
+	Count          int         `json:"count"          description:"商品数量"`
+	PayType        int         `json:"payType"        description:"支付方式 1微信 2支付宝 3云闪付"`
+	Remark         string      `json:"remark"         description:"备注"`
+	Status         int         `json:"status"         description:"订单状态 0待支付 1已支付 3已确认收货"`
+	Price          int         `json:"price"          description:"订单金额 单位分"`
+	CouponPrice    int         `json:"couponPrice"    description:"优惠券金额 单位分"`
+	ActualPrice    int         `json:"actualPrice"    description:"实际支付金额 单位分"`
+	PayAt          *gtime.Time `json:"payAt"          description:"支付时间"`
+	CreatedAt      *gtime.Time `json:"createdAt"      description:""`
+	UpdatedAt      *gtime.Time `json:"updatedAt"      description:""`
 }

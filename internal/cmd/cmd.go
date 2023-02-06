@@ -94,6 +94,7 @@ var (
 						controller.Praise,              //收藏
 						controller.Comment,             //评论
 						controller.Cart,                //购物车
+						controller.OrderGoodsComments,  //订单评价
 					)
 				})
 			})
