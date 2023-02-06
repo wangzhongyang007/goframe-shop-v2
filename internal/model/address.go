@@ -1,6 +1,9 @@
 package model
 
-import "goframe-shop-v2/api/backend"
+import (
+	"github.com/gogf/gf/v2/frame/g"
+	"goframe-shop-v2/api/backend"
+)
 
 type AddressBase struct {
 	ParentId int    `json:"parentId" description:"父级id"`
@@ -35,4 +38,18 @@ type PageAddressInput struct {
 }
 type PageAddressOutput struct {
 	backend.CommonPaginationRes
+}
+
+// 客户端获取省市县区地址
+type CityAddressListOutput struct {
+	List []CityAddressListOutputItem `json:"list" description:"列表"`
+}
+
+type CityAddressListOutputItem struct {
+	g.Meta   `orm:"table:address_info"`
+	Id       int                         `json:"id"`
+	Name     string                      `json:"name"`
+	Pid      int                         `json:"pid"`
+	Status   int                         `json:"status" `
+	Children []CityAddressListOutputItem `json:"Children" orm:"with:pid=id"`
 }

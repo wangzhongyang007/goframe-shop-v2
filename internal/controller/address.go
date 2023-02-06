@@ -70,3 +70,9 @@ func (*cAddress) Page(ctx context.Context, req *backend.PageAddressReq) (res *ba
 		},
 	}, nil
 }
+
+// 客户端获取省市县区地址
+func (a *cAddress) CityList(ctx context.Context, req *backend.CityAddressListReq) (res *backend.CityAddressListRes, err error) {
+	out, err := service.Address().GetCityList(ctx)
+	return &backend.CityAddressListRes{List: out.List}, nil
+}

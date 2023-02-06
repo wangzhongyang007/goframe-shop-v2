@@ -3,6 +3,7 @@ package address
 import (
 	"context"
 	"goframe-shop-v2/api/backend"
+	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model"
 	"goframe-shop-v2/internal/model/entity"
@@ -63,5 +64,15 @@ func (*sAddress) Page(ctx context.Context, in model.PageAddressInput) (out *mode
 	}
 	out.List = list
 
+	return
+}
+
+// 客户端获取省市县区地址
+func (*sAddress) GetCityList(ctx context.Context) (out *model.CityAddressListOutput, err error) {
+	out = &model.CityAddressListOutput{}
+	err = dao.AddressInfo.Ctx(ctx).Where(dao.AddressInfo.Columns().Pid, consts.ProvincePid).WithAll().Scan(&out.List)
+	if err != nil {
+		return out, err
+	}
 	return
 }
