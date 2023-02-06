@@ -44,4 +44,9 @@ const (
 	CommentTypeArticle = 2
 	//收货地址相关
 	ProvincePid = 1
+
+	//订单评论默认时间 7天 超过7天后默认好评 7 * 24 * 60 * 60
+	UserOrderDefaultCommentsTime = 7 * 24 * 60 * 60
+	UserOrderStatus              = 5
+	UserOrderDefaultComments     = "系统默认好评"
 )
