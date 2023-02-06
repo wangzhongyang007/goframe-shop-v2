@@ -64,6 +64,7 @@ var (
 						controller.GoodsOptions, //商品规格管理
 						controller.Article,      //文章管理&CMS
 						controller.Address,      //城市地址管理
+						controller.Order,        //订单管理
 					)
 				})
 			})
