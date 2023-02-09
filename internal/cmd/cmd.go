@@ -17,11 +17,11 @@ var (
 		Brief: consts.ProjectBrief,
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			//订单超时未评价默认好评
-			err = UserOrderDefaultComments(ctx)
-			if err != nil {
-				panic(err)
-			}
+			//订单超时未评价默认好评 todo 放开
+			//err = UserOrderDefaultComments(ctx)
+			//if err != nil {
+			//	panic(err)
+			//}
 			// 启动管理后台gtoken
 			gfAdminToken, err := StartBackendGToken()
 			if err != nil {
@@ -64,7 +64,9 @@ var (
 						controller.GoodsOptions, //商品规格管理
 						controller.Article,      //文章管理&CMS
 						controller.Address,      //城市地址管理
-						controller.Order,        //订单管理
+						//这么写是为了避免前后端重复注册相同的路由和方法
+						controller.Order.List,   //订单列表
+						controller.Order.Detail, //订单详情
 					)
 				})
 			})
@@ -100,6 +102,7 @@ var (
 						controller.Praise,              //收藏
 						controller.Comment,             //评论
 						controller.Cart,                //购物车
+						controller.Order.Add,           //下单
 						controller.OrderGoodsComments,  //订单评价
 					)
 				})

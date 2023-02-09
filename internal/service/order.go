@@ -12,6 +12,7 @@ import (
 
 type (
 	IOrder interface {
+		Add(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error)
 		List(ctx context.Context, in model.OrderListInput) (out *model.OrderListOutput, err error)
 		Detail(ctx context.Context, in model.OrderDetailInput) (out *model.OrderDetailOutput, err error)
 	}

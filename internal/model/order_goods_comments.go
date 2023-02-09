@@ -1,5 +1,6 @@
 package model
 
+// todo 没有记录评价userid
 type AddOrderGoodsCommentsInput struct {
 	OrderId        uint
 	GoodsId        uint

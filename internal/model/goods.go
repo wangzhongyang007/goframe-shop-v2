@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/gogf/gf/v2/util/gmeta"
 	"goframe-shop-v2/internal/model/do"
 	"goframe-shop-v2/internal/model/entity"
 )
@@ -63,4 +64,15 @@ type GoodsDetailOutput struct {
 	do.GoodsInfo
 	Options  []*do.GoodsOptionsInfo `orm:"with:goods_id=id"` //规格 sku
 	Comments []*CommentBase         `orm:"with:object_id=id, where:type=1"`
+}
+
+type BaseGoodsColumns struct {
+	gmeta.Meta `orm:"table:goods_info"`
+	Id         string `json:"id"`
+	Name       string `json:"name"`
+	Price      int    `json:"price"`
+	Brand      string `json:"brand"`
+	Tags       string `json:"tags"`
+	PicUrl     string `json:"pic_url"`
+	DetailInfo string `json:"detail_info"`
 }

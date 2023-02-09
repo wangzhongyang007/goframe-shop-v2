@@ -319,3 +319,15 @@ func GetBefore7Date() (date string) {
 	date = gt.Add(-gtime.D * 6).Format("Y-m-d")
 	return
 }
+
+func GetOrderNum() (number string) {
+	rand.Seed(time.Now().UnixNano())
+	number = gconv.String(time.Now().UnixNano()) + gconv.String(rand.Intn(1000))
+	return
+}
+
+func GetRefundNum() (number string) {
+	rand.Seed(time.Now().UnixNano())
+	number = "refund" + gconv.String(time.Now().UnixNano()) + gconv.String(rand.Intn(1000))
+	return
+}

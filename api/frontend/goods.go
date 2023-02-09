@@ -3,6 +3,7 @@ package frontend
 import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/util/gmeta"
 )
 
 type GoodsGetListCommonReq struct {
@@ -51,4 +52,15 @@ type GoodsOptionsBase struct {
 	Price     int         `json:"price"     description:"价格 单位分"`
 	Stock     int         `json:"stock"     description:"库存"`
 	CreatedAt *gtime.Time `json:"created_at" description:""`
+}
+
+type BaseGoodsColumns struct {
+	gmeta.Meta `orm:"table:goods_info"`
+	Id         string `json:"id"`
+	Name       string `json:"name"`
+	Price      int    `json:"price"`
+	Brand      string `json:"brand"`
+	Tags       string `json:"tags"`
+	PicUrl     string `json:"pic_url"`
+	DetailInfo string `json:"detail_info"`
 }
