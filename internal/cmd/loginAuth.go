@@ -184,6 +184,7 @@ func loginAfterFuncFrontend(r *ghttp.Request, respData gtoken.Resp) {
 	return
 }
 
+// 登录鉴权中间件for后台
 func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	var adminInfo entity.AdminInfo
 	err := gconv.Struct(respData.GetString("data"), &adminInfo)
@@ -191,7 +192,7 @@ func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		response.Auth(r)
 		return
 	}
-
+	//todo 这里可以写账号前置校验、是否被拉黑、有无权限等逻辑
 	r.SetCtxVar(consts.CtxAdminId, adminInfo.Id)
 	r.SetCtxVar(consts.CtxAdminName, adminInfo.Name)
 	r.SetCtxVar(consts.CtxAdminIsAdmin, adminInfo.IsAdmin)
@@ -199,6 +200,7 @@ func authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	r.Middleware.Next()
 }
 
+// 登录鉴权中间件for前台
 func authAfterFuncFrontend(r *ghttp.Request, respData gtoken.Resp) {
 	var userInfo entity.UserInfo
 	err := gconv.Struct(respData.GetString("data"), &userInfo)
@@ -206,7 +208,7 @@ func authAfterFuncFrontend(r *ghttp.Request, respData gtoken.Resp) {
 		response.Auth(r)
 		return
 	}
-
+	//todo 这里可以写账号前置校验、是否被拉黑、有无权限等逻辑
 	r.SetCtxVar(consts.CtxUserId, userInfo.Id)
 	r.SetCtxVar(consts.CtxUserName, userInfo.Name)
 	r.SetCtxVar(consts.CtxUserAvatar, userInfo.Avatar)
