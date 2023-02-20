@@ -34,6 +34,7 @@ type ArticleGetListInput struct {
 	Page int // 分页号码
 	Size int // 分页数量，最大50
 	Sort int // 排序类型(0:最新, 默认。1:活跃, 2:热度)
+	ArticleUserAction
 }
 
 // ArticleGetListOutput 查询列表结果
@@ -46,4 +47,23 @@ type ArticleGetListOutput struct {
 
 type ArticleGetListOutputItem struct {
 	entity.ArticleInfo
+}
+
+type ArticleDetailInput struct {
+	Id uint
+}
+
+type ArticleDetailOutput struct {
+	entity.ArticleInfo
+}
+
+type ArticleDeleteInput struct {
+	Id uint
+	ArticleUserAction
+}
+
+// 获取用户相关
+type ArticleUserAction struct {
+	UserId  int // 用户
+	IsAdmin int // 是否是管理员
 }

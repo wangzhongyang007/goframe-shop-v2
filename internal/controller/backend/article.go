@@ -1,12 +1,13 @@
-package controller
+package backend
 
 import (
 	"context"
-	"github.com/gogf/gf/v2/util/gconv"
 	"goframe-shop-v2/api/backend"
 	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/model"
 	"goframe-shop-v2/internal/service"
+
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // Article 内容管理
@@ -29,7 +30,7 @@ func (a *cArticle) Create(ctx context.Context, req *backend.ArticleReq) (res *ba
 }
 
 func (a *cArticle) Delete(ctx context.Context, req *backend.ArticleDeleteReq) (res *backend.ArticleDeleteRes, err error) {
-	err = service.Article().Delete(ctx, req.Id)
+	err = service.Article().Delete(ctx, model.ArticleDeleteInput{Id: req.Id})
 	return
 }
 
@@ -42,6 +43,9 @@ func (a *cArticle) Update(ctx context.Context, req *backend.ArticleUpdateReq) (r
 	//获取当前登录用户
 	data.UserId = gconv.Int(ctx.Value(consts.CtxAdminId))
 	err = service.Article().Update(ctx, data)
+	if err != nil {
+		return nil, err
+	}
 	return &backend.ArticleUpdateRes{Id: req.Id}, nil
 }
 

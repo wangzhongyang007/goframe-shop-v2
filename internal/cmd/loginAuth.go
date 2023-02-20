@@ -93,7 +93,7 @@ func loginFuncFrontend(r *ghttp.Request) (string, interface{}) {
 
 	//验证账号密码是否正确
 	userInfo := entity.UserInfo{}
-	err := dao.UserInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, name).Scan(&userInfo)
+	err := dao.UserInfo.Ctx(ctx).Where(dao.UserInfo.Columns().Name, name).Scan(&userInfo)
 	if err != nil {
 		r.Response.WriteJson(gtoken.Fail(consts.ErrLoginFaulMsg))
 		r.ExitAll()
