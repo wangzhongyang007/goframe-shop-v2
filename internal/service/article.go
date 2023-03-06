@@ -13,9 +13,10 @@ import (
 type (
 	IArticle interface {
 		Create(ctx context.Context, in model.ArticleCreateInput) (out model.ArticleCreateOutput, err error)
-		Delete(ctx context.Context, id uint) (err error)
+		Delete(ctx context.Context, in model.ArticleDeleteInput) (err error)
 		Update(ctx context.Context, in model.ArticleUpdateInput) error
 		GetList(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error)
+		Detail(ctx context.Context, in model.ArticleDetailInput) (out *model.ArticleDetailOutput, err error)
 	}
 )
 

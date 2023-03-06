@@ -2,12 +2,15 @@ package cmd
 
 import (
 	"context"
+	"goframe-shop-v2/internal/consts"
+	"goframe-shop-v2/internal/controller"
+	"goframe-shop-v2/internal/controller/backend"
+	"goframe-shop-v2/internal/controller/frontend"
+	"goframe-shop-v2/internal/service"
+
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
-	"goframe-shop-v2/internal/consts"
-	"goframe-shop-v2/internal/controller"
-	"goframe-shop-v2/internal/service"
 )
 
 var (
@@ -62,11 +65,11 @@ var (
 						controller.UserCoupon,   //商品优惠券管理
 						controller.Goods,        //商品管理
 						controller.GoodsOptions, //商品规格管理
-						controller.Article,      //文章管理&CMS
 						controller.Address,      //城市地址管理
 						//这么写是为了避免前后端重复注册相同的路由和方法
 						controller.Order.List,   //订单列表
 						controller.Order.Detail, //订单详情
+						backend.Article,         //文章管理&CMS
 					)
 				})
 			})
@@ -104,6 +107,8 @@ var (
 						controller.Cart,                //购物车
 						controller.Order.Add,           //下单
 						controller.OrderGoodsComments,  //订单评价
+						frontend.Article,               //文章
+						frontend.Refund,
 					)
 				})
 			})

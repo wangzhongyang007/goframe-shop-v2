@@ -25,6 +25,7 @@ import (
 	_ "goframe-shop-v2/internal/logic/permission"
 	_ "goframe-shop-v2/internal/logic/position"
 	_ "goframe-shop-v2/internal/logic/praise"
+	_ "goframe-shop-v2/internal/logic/refund"
 	_ "goframe-shop-v2/internal/logic/role"
 	_ "goframe-shop-v2/internal/logic/rotation"
 	_ "goframe-shop-v2/internal/logic/session"

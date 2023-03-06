@@ -33,6 +33,7 @@ const (
 	CodeMissingParameterMsg = "请检查是否缺少参数"
 	ErrLoginFaulMsg         = "登录失败，账号或密码错误"
 	ErrSecretAnswerMsg      = "密保问题不正确"
+	ResourcePermissionFail  = "没有权限操作"
 	//收藏相关
 	CollectionTypeGoods   = 1
 	CollectionTypeArticle = 2
@@ -44,9 +45,15 @@ const (
 	CommentTypeArticle = 2
 	//收货地址相关
 	ProvincePid = 1
-
 	//订单评论默认时间 7天 超过7天后默认好评 7 * 24 * 60 * 60
 	UserOrderDefaultCommentsTime = 7 * 24 * 60 * 60
 	UserOrderStatus              = 5
 	UserOrderDefaultComments     = "系统默认好评"
+	//文章相关
+	ArticleIsAdmin = 1
+	ArticleIsUser  = 2
+	//售后相关
+	RefundStatusWait   = 1
+	RefundStatusAgree  = 2
+	RefundStatusRejuct = 3
 )
