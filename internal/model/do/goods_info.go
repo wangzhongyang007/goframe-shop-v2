@@ -20,6 +20,7 @@ type GoodsInfo struct {
 	Level2CategoryId interface{} // 2级分类id
 	Level3CategoryId interface{} // 3级分类id
 	Brand            interface{} // 品牌
+	CouponId         interface{} // 优惠券id
 	Stock            interface{} // 库存
 	Sale             interface{} // 销量
 	Tags             interface{} // 标签

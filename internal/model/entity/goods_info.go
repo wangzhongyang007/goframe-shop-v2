@@ -18,6 +18,7 @@ type GoodsInfo struct {
 	Level2CategoryId int         `json:"level2CategoryId" description:"2级分类id"`
 	Level3CategoryId int         `json:"level3CategoryId" description:"3级分类id"`
 	Brand            string      `json:"brand"            description:"品牌"`
+	CouponId         int         `json:"couponId"         description:"优惠券id"`
 	Stock            int         `json:"stock"            description:"库存"`
 	Sale             int         `json:"sale"             description:"销量"`
 	Tags             string      `json:"tags"             description:"标签"`

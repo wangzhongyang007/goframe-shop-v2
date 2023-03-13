@@ -21,8 +21,8 @@ type CollectionInfoDao struct {
 // CollectionInfoColumns defines and stores column names for table collection_info.
 type CollectionInfoColumns struct {
 	Id        string //
-	UserId    string // 用户id
-	ObjectId  string // 对象id
+	UserId    string //
+	ObjectId  string //
 	Type      string // 收藏类型：1商品 2文章
 	CreatedAt string //
 	UpdatedAt string //
