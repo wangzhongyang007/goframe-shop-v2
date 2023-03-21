@@ -50,8 +50,8 @@ const (
 	UserOrderStatus              = 5
 	UserOrderDefaultComments     = "系统默认好评"
 	//文章相关
-	ArticleIsAdmin = 1
-	ArticleIsUser  = 2
+	ArticleIsAdmin = 1 //管理员发布
+	ArticleIsUser  = 2 //用户发布
 	//售后相关
 	RefundStatusWait   = 1
 	RefundStatusAgree  = 2

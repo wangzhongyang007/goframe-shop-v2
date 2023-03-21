@@ -17,8 +17,8 @@ type cRefund struct{}
 // 下单
 func (c *cRefund) Add(ctx context.Context, req *frontend.RefundAddReq) (res *frontend.RefundAddRes, err error) {
 	refundAddInput := model.RefundAddInput{}
-	//注意：这里要用scan 而不是struct
-	if err = gconv.Scan(req, &refundAddInput); err != nil {
+	//注意：这里不需要用scan 用struct就可以 因为不涉及到嵌套，就是最简单的结构体转换
+	if err = gconv.Struct(req, &refundAddInput); err != nil {
 		return nil, err
 	}
 

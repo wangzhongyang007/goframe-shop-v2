@@ -1,0 +1,34 @@
+server:
+  address: ":8000"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+
+# 数据库连接配置
+database:
+  logger:
+    path: "logs/sql"
+    level: "all"
+    stdout: true
+    ctxKeys: [ "RequestId" ]
+
+  default: # todo  修改成自己的密码
+    link: "mysql:root:2BaDgEMGQj@tcp(127.0.0.1:3306)/shop"
+    debug: true
+
+
+# Redis 配置示例
+redis:
+  default:
+    address: 127.0.0.1:6379
+    db: 1
+    pass: f2QteFQvC6rxjjJ6
+    idleTimeout: 600
+#todo 改成你自己的秘钥和域名地址
+qiniu:
+  bucket: "x"
+  accessKey: "x"
+  secretKey: "x"
+  url: "http://x.x.x/"
+
+upload:
+  path: "upload"

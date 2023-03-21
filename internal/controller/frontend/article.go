@@ -17,7 +17,8 @@ type cArticle struct{}
 
 func (a *cArticle) Create(ctx context.Context, req *frontend.ArticleAddReq) (res *frontend.ArticleAddRes, err error) {
 	data := model.ArticleCreateInput{}
-	err = gconv.Scan(req, &data)
+	//这里不需要用scan 用struct就可以 因为不涉及到嵌套，就是最简单的结构体转换
+	err = gconv.Struct(req, &data)
 	if err != nil {
 		return nil, err
 	}

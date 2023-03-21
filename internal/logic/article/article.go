@@ -92,9 +92,8 @@ func (s *sArticle) GetList(ctx context.Context, in model.ArticleGetListInput) (o
 	return
 }
 
-//详情
+// 详情
 func (s *sArticle) Detail(ctx context.Context, in model.ArticleDetailInput) (out *model.ArticleDetailOutput, err error) {
 	err = dao.ArticleInfo.Ctx(ctx).WithAll().WherePri(in.Id).Scan(&out)
-
 	return
 }

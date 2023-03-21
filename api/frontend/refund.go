@@ -6,8 +6,8 @@ import (
 
 type RefundAddReq struct {
 	g.Meta  `path:"/refund/add" tags:"前端售后" method:"post" summary:"发起售后"`
-	OrderId int    `json:"orderId"   description:"订单id"`
-	GoodsId int    `json:"goodsId"   description:"要售后的商品id"`
+	OrderId int    `json:"order_id"   description:"订单id"`
+	GoodsId int    `json:"goods_id"   description:"要售后的商品id"`
 	Reason  string `json:"reason"    description:"退款原因"`
 }
 
@@ -35,11 +35,11 @@ type RefundDetailReq struct {
 type RefundDetailRes struct {
 	Id        int    `json:"id"        description:"售后退款表"`
 	Number    string `json:"number"    description:"售后订单号"`
-	OrderId   int    `json:"orderId"   description:"订单id"`
-	GoodsId   int    `json:"goodsId"   description:"要售后的商品id"`
+	OrderId   int    `json:"order_id"   description:"订单id"`
+	GoodsId   int    `json:"goods_id"   description:"要售后的商品id"`
 	Reason    string `json:"reason"    description:"退款原因"`
 	Status    int    `json:"status"    description:"状态 1待处理 2同意退款 3拒绝退款"`
 	UserId    int    `json:"userId"    description:"用户id"`
-	CreatedAt string `json:"createdAt" description:""`
-	UpdatedAt string `json:"updatedAt" description:""`
+	CreatedAt string `json:"created_at" description:""`
+	UpdatedAt string `json:"updated_at" description:""`
 }

@@ -107,11 +107,12 @@ var (
 						controller.Cart,                //购物车
 						controller.Order.Add,           //下单
 						controller.OrderGoodsComments,  //订单评价
-						frontend.Article,               //文章
-						frontend.Refund,
+						frontend.Article,               //文章 @author自愚自乐
+						frontend.Refund,                //售后 @author自愚自乐
 					)
 				})
 			})
+			s.SetPort(8000) //设置端口
 			s.Run()
 			return nil
 		},
