@@ -70,24 +70,28 @@ func (s *sOrder) Add(ctx context.Context, in model.OrderAddInput) (out *model.Or
 	}
 	return
 }
-
 func (s *sOrder) List(ctx context.Context, in model.OrderListInput) (out *model.OrderListOutput, err error) {
+	//1.获得*gdb.Model对象，方面后续调用
+	whereCondition := s.orderListCondition(in)
+	m := dao.OrderInfo.Ctx(ctx).Where(whereCondition)
+	//2. 实例化响应结构体
 	out = &model.OrderListOutput{
 		Page: in.Page,
 		Size: in.Size,
 	}
-
-	whereCondition := s.orderListCondition(in)
-	m := dao.OrderInfo.Ctx(ctx).Where(whereCondition)
-
-	if err = m.Page(in.Page, in.Size).Scan(&out.List); err != nil {
-		return nil, err
+	//3. 分页查询
+	listModel := m.Page(in.Page, in.Size)
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
+		return out, err
 	}
-
-	if out.Total, err = m.Count(); err != nil {
-		return nil, err
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.OrderListOutputItem, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
 	}
-
 	return
 }
 
