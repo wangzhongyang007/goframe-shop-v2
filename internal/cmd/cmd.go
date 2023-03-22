@@ -56,20 +56,20 @@ var (
 						controller.Admin.Update, // 管理员
 						controller.Admin.Delete, // 管理员
 						controller.Admin.Info,   // 查询当前管理员信息
-						controller.Rotation,     // 轮播图
-						controller.Position,     // 手工位
+						controller.Rotation,     // 轮播图 todo: getlist
+						controller.Position,     // 手工位 todo: getlist
 						controller.File,         //从0到1实现文件入库
 						controller.Upload,       //实现可跨项目使用的文件上云工具类
-						controller.Category,     //商品分类管理
-						controller.Coupon,       //商品优惠券管理
-						controller.UserCoupon,   //商品优惠券管理
-						controller.Goods,        //商品管理
-						controller.GoodsOptions, //商品规格管理
-						controller.Address,      //城市地址管理
+						controller.Category,     //商品分类管理 todo: getlist
+						controller.Coupon,       //商品优惠券管理 todo: getlist
+						controller.UserCoupon,   //商品优惠券管理 todo: getlist
+						controller.Goods,        //商品管理 todo: getlist
+						controller.GoodsOptions, //商品规格管理 todo: getlist
+						controller.Address,      //城市地址管理 todo: getlist
 						//这么写是为了避免前后端重复注册相同的路由和方法
-						controller.Order.List,   //订单列表
+						controller.Order.List,   //订单列表 todo: getlist
 						controller.Order.Detail, //订单详情
-						backend.Article,         //文章管理&CMS
+						backend.Article,         //文章管理&CMS todo: getlist
 					)
 				})
 			})
