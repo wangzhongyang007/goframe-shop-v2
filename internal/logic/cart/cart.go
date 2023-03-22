@@ -62,25 +62,25 @@ func (s *sCart) Delete(ctx context.Context, in model.DeleteCartInput) (out model
 }
 
 func (s *sCart) List(ctx context.Context, in model.ListCartInput) (out *model.ListCartOutput, err error) {
-	var (
-		m = dao.CartInfo.Ctx(ctx)
-	)
+	//1.获得*gdb.Model对象，方面后续调用
+	userId := gconv.Uint(ctx.Value(consts.CtxUserId))
+	m := dao.CartInfo.Ctx(ctx).Where(dao.CartInfo.Columns().UserId, userId)
+	//2. 实例化响应结构体
 	out = &model.ListCartOutput{
 		Page: in.Page,
 		Size: in.Size,
-		List: []model.ListCartBase{}, //数据为空时返回空数组 而不是null
 	}
-	// 翻页查询 当前用户
-	listModel := m.Page(in.Page, in.Size).Where(dao.CartInfo.Columns().UserId, ctx.Value(consts.CtxUserId))
-	out.Total, err = listModel.Count()
-	if err != nil {
+	//3. 分页查询
+	listModel := m.Page(in.Page, in.Size)
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
 		return out, err
 	}
-	if out.Total == 0 {
-		return out, err
-	}
-	err = listModel.WithAll().Scan(&out.List)
-	if err != nil {
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.ListCartBase, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
+	if err := listModel.WithAll().Scan(&out.List); err != nil {
 		return out, err
 	}
 	return

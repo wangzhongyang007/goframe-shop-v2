@@ -30,6 +30,7 @@ type DeleteCommentRes struct {
 type ListCommentReq struct {
 	g.Meta `path:"/comment/list" method:"post" tags:"前台评论" summary:"评论列表"`
 	Type   uint8 `json:"type" v:"in:1,2" dc:"评论类型"`
+	//ParentId uint8 `json:"parent_id" dc:"父评论id"`
 	CommonPaginationReq
 }
 
