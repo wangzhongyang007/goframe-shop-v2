@@ -92,6 +92,13 @@ func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
 	})
 }
 
+//1.获得*gdb.Model对象，方面后续调用
+//2. 实例化响应结构体
+//3. 分页查询
+//4. 再查询count，判断有无数据
+//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+//6. 把查询到的结果赋值到响应结构体中
+
 // GetList 查询内容列表
 func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *model.AdminGetListOutput, err error) {
 	//1.获得*gdb.Model对象，方面后续调用
