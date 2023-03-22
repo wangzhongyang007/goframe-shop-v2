@@ -26,9 +26,10 @@ type DeleteCommentRes struct {
 	Id uint `json:"id"`
 }
 
+// TODO:评论列表的查询逻辑处理按uid查.应该还要加按parent_id查,得加一个req类型
 type ListCommentReq struct {
 	g.Meta `path:"/comment/list" method:"post" tags:"前台评论" summary:"评论列表"`
-	Type   uint8 `json:"type" v:"in:0,1,2" dc:"评论类型"`
+	Type   uint8 `json:"type" v:"in:1,2" dc:"评论类型"`
 	CommonPaginationReq
 }
 
