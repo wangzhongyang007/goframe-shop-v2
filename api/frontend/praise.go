@@ -25,7 +25,7 @@ type DeletePraiseRes struct {
 
 type ListPraiseReq struct {
 	g.Meta `path:"/praise/list" method:"post" tags:"前台点赞" summary:"点赞列表"`
-	Type   uint8 `json:"type" v:"in:0,1,2" dc:"点赞类型"`
+	Type   uint8 `json:"type" v:"in:1,2" dc:"点赞类型"`
 	CommonPaginationReq
 }
 

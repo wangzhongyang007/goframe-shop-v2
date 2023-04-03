@@ -53,6 +53,38 @@ func (*sCollection) DeleteCollection(ctx context.Context, in model.DeleteCollect
 // 列表
 // GetList 查询内容列表
 func (*sCollection) GetList(ctx context.Context, in model.CollectionListInput) (out *model.CollectionListOutput, err error) {
+	//1.获得*gdb.Model对象，方面后续调用
+	userId := gconv.Uint(ctx.Value(consts.CtxUserId))
+	m := dao.CollectionInfo.Ctx(ctx).Where(dao.CollectionInfo.Columns().Type, in.Type).
+		Where(dao.CollectionInfo.Columns().UserId, userId)
+	//2. 实例化响应结构体
+	out = &model.CollectionListOutput{
+		Page: in.Page,
+		Size: in.Size,
+	}
+	//3. 分页查询
+	listModel := m.Page(in.Page, in.Size)
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
+		return out, err
+	}
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.CollectionListOutputItem, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
+	if in.Type == consts.CollectionTypeGoods {
+		if err := listModel.With(model.GoodsItem{}).Scan(&out.List); err != nil {
+			return out, err
+		}
+	} else if in.Type == consts.CollectionTypeArticle {
+		if err := listModel.With(model.ArticleItem{}).Scan(&out.List); err != nil {
+			return out, err
+		}
+	}
+	return
+}
+
+func (*sCollection) GeqtList(ctx context.Context, in model.CollectionListInput) (out *model.CollectionListOutput, err error) {
 	var (
 		m = dao.CollectionInfo.Ctx(ctx)
 	)

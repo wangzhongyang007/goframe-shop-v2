@@ -51,32 +51,23 @@ func (s *sCategory) Update(ctx context.Context, in model.CategoryUpdateInput) er
 
 // GetList 查询分类列表
 func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error) {
-	var (
-		m = dao.CategoryInfo.Ctx(ctx)
-	)
+	//1.获得*gdb.Model对象，方面后续调用
+	m := dao.CategoryInfo.Ctx(ctx)
+	//2. 实例化响应结构体
 	out = &model.CategoryGetListOutput{
 		Page: in.Page,
 		Size: in.Size,
 	}
-
-	// 分页查询
+	//3. 分页查询
 	listModel := m.Page(in.Page, in.Size)
-	// 排序方式
-	listModel = listModel.OrderDesc(dao.CategoryInfo.Columns().Sort)
-
-	// 执行查询
-	var list []*entity.CategoryInfo
-	if err := listModel.Scan(&list); err != nil {
-		return out, err
-	}
-	// 没有数据
-	if len(list) == 0 {
-		return out, nil
-	}
+	//4. 再查询count，判断有无数据
 	out.Total, err = m.Count()
-	if err != nil {
+	if err != nil || out.Total == 0 {
 		return out, err
 	}
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.CategoryGetListOutputItem, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
 	}

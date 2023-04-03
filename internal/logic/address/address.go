@@ -2,7 +2,6 @@ package address
 
 import (
 	"context"
-	"goframe-shop-v2/api/backend"
 	"goframe-shop-v2/internal/consts"
 	"goframe-shop-v2/internal/dao"
 	"goframe-shop-v2/internal/model"
@@ -40,30 +39,26 @@ func (*sAddress) Delete(ctx context.Context, id int) (err error) {
 }
 
 func (*sAddress) Page(ctx context.Context, in model.PageAddressInput) (out *model.PageAddressOutput, err error) {
-	var m = dao.AddressInfo.Ctx(ctx)
-	out = &model.PageAddressOutput{
-		CommonPaginationRes: backend.CommonPaginationRes{
-			Page: in.Page,
-			Size: in.Size,
-			List: []entity.AddressInfo{},
-		},
-	}
+	//1.获得*gdb.Model对象，方面后续调用
+	m := dao.AddressInfo.Ctx(ctx)
+	//2. 实例化响应结构体
+	out = &model.PageAddressOutput{}
+	out.Page, out.Size = in.Page, in.Size
+	//3. 分页查询
 	listModel := m.Page(in.Page, in.Size)
-	if out.Total, err = listModel.Count(); err != nil {
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
 		return out, err
 	}
-	if out.Total == 0 {
-		return out, nil
-	}
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]entity.AddressInfo, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
 	var list []entity.AddressInfo
-	if err = listModel.ScanList(&list, "list"); err != nil {
-		return out, err
-	}
-	if len(list) == 0 {
+	if err := listModel.Scan(&list); err != nil {
 		return out, err
 	}
 	out.List = list
-
 	return
 }
 

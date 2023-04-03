@@ -54,39 +54,31 @@ func (*sPraise) DeletePraise(ctx context.Context, in model.DeletePraiseInput) (r
 // 列表
 // GetList 查询内容列表
 func (*sPraise) GetList(ctx context.Context, in model.PraiseListInput) (out *model.PraiseListOutput, err error) {
-	var (
-		m = dao.PraiseInfo.Ctx(ctx)
-	)
+	//1.获得*gdb.Model对象，方面后续调用
+	userId := gconv.Uint(ctx.Value(consts.CtxUserId))
+	m := dao.PraiseInfo.Ctx(ctx).Where(dao.PraiseInfo.Columns().Type, in.Type).
+		Where(dao.PraiseInfo.Columns().UserId, userId)
+	//2. 实例化响应结构体
 	out = &model.PraiseListOutput{
 		Page: in.Page,
 		Size: in.Size,
-		List: []model.PraiseListOutputItem{}, //数据为空时返回空数组 而不是null
 	}
-	// 翻页查询
+	//3. 分页查询
 	listModel := m.Page(in.Page, in.Size)
-	// 条件查询
-	if in.Type != 0 {
-		listModel = listModel.Where(dao.PraiseInfo.Columns().Type, in.Type)
-	}
-	//优化：优先查询count 而不是像之前一样查sql结果赋值到结构体中
-	out.Total, err = listModel.Count()
-	if err != nil {
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
 		return out, err
 	}
-	if out.Total == 0 {
-		return out, err
-	}
-	//进一步优化：只查询相关的模型关联
-	if in.Type == consts.PraiseTypeGoods {
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.PraiseListOutputItem, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
+	if in.Type == consts.CollectionTypeGoods {
 		if err := listModel.With(model.GoodsItem{}).Scan(&out.List); err != nil {
 			return out, err
 		}
-	} else if in.Type == consts.PraiseTypeArticle {
+	} else if in.Type == consts.CollectionTypeArticle {
 		if err := listModel.With(model.ArticleItem{}).Scan(&out.List); err != nil {
-			return out, err
-		}
-	} else {
-		if err := listModel.WithAll().Scan(&out.List); err != nil {
 			return out, err
 		}
 	}

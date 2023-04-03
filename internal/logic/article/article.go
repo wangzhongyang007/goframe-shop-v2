@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 type sArticle struct{}
@@ -66,28 +65,25 @@ func (s *sArticle) Update(ctx context.Context, in model.ArticleUpdateInput) erro
 
 // GetList 查询分类列表
 func (s *sArticle) GetList(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error) {
-	var (
-		m = dao.ArticleInfo.Ctx(ctx)
-	)
+	//1.获得*gdb.Model对象，方面后续调用
+	m := dao.ArticleInfo.Ctx(ctx)
+	//2. 实例化响应结构体
 	out = &model.ArticleGetListOutput{
 		Page: in.Page,
 		Size: in.Size,
 	}
-
-	// 分页查询
-	if in.UserId != 0 { //我的文章
-		m = m.Where(g.Map{
-			dao.ArticleInfo.Columns().UserId:  in.UserId,
-			dao.ArticleInfo.Columns().IsAdmin: in.IsAdmin,
-		})
+	//3. 分页查询
+	listModel := m.Page(in.Page, in.Size)
+	//4. 再查询count，判断有无数据
+	out.Total, err = m.Count()
+	if err != nil || out.Total == 0 {
+		return out, err
 	}
-
-	if err = m.Page(in.Page, in.Size).Scan(&out.List); err != nil {
-		return nil, err
-	}
-
-	if out.Total, err = m.Count(); err != nil {
-		return nil, err
+	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
+	out.List = make([]model.ArticleGetListOutputItem, 0, in.Size)
+	//6. 把查询到的结果赋值到响应结构体中
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
 	}
 	return
 }
