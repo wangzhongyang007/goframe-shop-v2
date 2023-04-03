@@ -28,6 +28,7 @@ type GoodsInfoColumns struct {
 	Level2CategoryId string // 2级分类id
 	Level3CategoryId string // 3级分类id
 	Brand            string // 品牌
+	CouponId         string // 优惠券id
 	Stock            string // 库存
 	Sale             string // 销量
 	Tags             string // 标签
@@ -47,6 +48,7 @@ var goodsInfoColumns = GoodsInfoColumns{
 	Level2CategoryId: "level2_category_id",
 	Level3CategoryId: "level3_category_id",
 	Brand:            "brand",
+	CouponId:         "coupon_id",
 	Stock:            "stock",
 	Sale:             "sale",
 	Tags:             "tags",

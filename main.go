@@ -5,7 +5,8 @@ import (
 	"github.com/gogf/gf/v2/os/gctx"
 	"goframe-shop-v2/internal/cmd"
 	_ "goframe-shop-v2/internal/logic"
-	_ "goframe-shop-v2/internal/packed" //
+	_ "goframe-shop-v2/internal/mq"
+	_ "goframe-shop-v2/internal/packed"
 )
 
 func main() {
