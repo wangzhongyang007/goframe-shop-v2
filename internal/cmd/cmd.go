@@ -20,8 +20,8 @@ var (
 		Brief: consts.ProjectBrief,
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			//订单超时未评价默认好评 todo 放开
-			//err = UserOrderDefaultComments(ctx)
+			//订单超时未评价默认好评
+			err = UserOrderDefaultComments(ctx)
 			//if err != nil {
 			//	panic(err)
 			//}

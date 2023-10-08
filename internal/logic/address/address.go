@@ -24,7 +24,11 @@ func (*sAddress) Add(ctx context.Context, in model.AddAddressInput) (out *model.
 }
 
 func (*sAddress) Update(ctx context.Context, in model.UpdateAddressInput) (err error) {
-	if _, err = dao.AddressInfo.Ctx(ctx).Data(in).FieldsEx(in.Id).Where(dao.AddressInfo.Columns().Id, in.Id).Update(); err != nil {
+	if _, err = dao.AddressInfo.Ctx(ctx).
+		Data(in).
+		OmitEmpty().
+		Where(dao.AddressInfo.Columns().Id, in.Id).
+		Update(); err != nil {
 		return err
 	}
 	return nil

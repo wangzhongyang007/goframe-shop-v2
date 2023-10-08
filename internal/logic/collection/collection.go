@@ -85,33 +85,36 @@ func (*sCollection) GetList(ctx context.Context, in model.CollectionListInput) (
 }
 
 func (*sCollection) GeqtList(ctx context.Context, in model.CollectionListInput) (out *model.CollectionListOutput, err error) {
-	var (
-		m = dao.CollectionInfo.Ctx(ctx)
-	)
+	//1. 定义全局通用的查询语句
+	userId := gconv.Uint(ctx.Value(consts.CtxUserId))
+	m := dao.CollectionInfo.Ctx(ctx).Where(dao.CollectionInfo.Columns().Type, in.Type).
+		Where(dao.CollectionInfo.Columns().UserId, userId)
+	//2. 实例化响应结构体
 	out = &model.CollectionListOutput{
 		Page: in.Page,
 		Size: in.Size,
-		List: []model.CollectionListOutputItem{}, //数据为空时返回空数组 而不是null
 	}
-	// 翻页查询
+	//3. 翻页查询
 	listModel := m.Page(in.Page, in.Size)
-	// 条件查询
-	listModel = listModel.Where(dao.CollectionInfo.Columns().Type, in.Type)
-	//优化：优先查询count 而不是像之前一样查sql结果赋值到结构体中
+	//4. 优先查询count，报错或者无数据则直接返回
 	out.Total, err = listModel.Count()
-	if err != nil {
+	if err != nil || out.Total == 0 {
+		out.List = make([]model.CollectionListOutputItem, 0, 0)
 		return out, err
 	}
-	if out.Total == 0 {
-		return out, err
-	}
-	//进一步优化：只查询相关的模型关联
+	//5. 延迟初始化list 确定有数据再按期望大小，实例化切片的容量
+	out.List = make([]model.CollectionListOutputItem, 0, out.Total)
+	//6. 进一步优化：根据传入参数区分查询对应的关联模型
 	if in.Type == consts.CollectionTypeGoods {
 		if err := listModel.With(model.GoodsItem{}).Scan(&out.List); err != nil {
 			return out, err
 		}
 	} else if in.Type == consts.CollectionTypeArticle {
 		if err := listModel.With(model.ArticleItem{}).Scan(&out.List); err != nil {
+			return out, err
+		}
+	} else {
+		if err := listModel.WithAll().Scan(&out.List); err != nil {
 			return out, err
 		}
 	}

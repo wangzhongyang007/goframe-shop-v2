@@ -70,26 +70,20 @@ func (s *sAdmin) Delete(ctx context.Context, id uint) error {
 
 // Update 修改
 func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
-	return dao.AdminInfo.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
-		// 不允许HTML代码
-		if err := ghtml.SpecialCharsMapOrStruct(in); err != nil {
-			return err
-		}
-		//判断是否修改了密码
-		if in.Password != "" {
-			UserSalt := grand.S(10)
-			in.Password = utility.EncryptPassword(in.Password, UserSalt)
-			in.UserSalt = UserSalt
-		}
-		//更新操作
-		_, err := dao.AdminInfo.
-			Ctx(ctx).
-			Data(in).
-			FieldsEx(dao.AdminInfo.Columns().Id).
-			Where(dao.AdminInfo.Columns().Id, in.Id).
-			Update()
-		return err
-	})
+	//判断是否修改了密码
+	if in.Password != "" {
+		UserSalt := grand.S(10)
+		in.Password = utility.EncryptPassword(in.Password, UserSalt)
+		in.UserSalt = UserSalt
+	}
+	//更新操作
+	_, err := dao.AdminInfo.
+		Ctx(ctx).
+		Data(in).
+		OmitEmpty(). //注意：使用OmitEmpty()实现部分更新
+		Where(dao.AdminInfo.Columns().Id, in.Id).
+		Update()
+	return err
 }
 
 //1.获得*gdb.Model对象，方面后续调用
@@ -101,7 +95,7 @@ func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
 
 // GetList 查询内容列表
 func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *model.AdminGetListOutput, err error) {
-	//1.获得*gdb.Model对象，方面后续调用
+	//1.获得*gdb.Model对象，方便后续调用
 	m := dao.AdminInfo.Ctx(ctx)
 	//2. 实例化响应结构体
 	out = &model.AdminGetListOutput{
@@ -113,10 +107,12 @@ func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *
 	//4. 再查询count，判断有无数据
 	out.Total, err = m.Count()
 	if err != nil || out.Total == 0 {
+		//解决空数据返回[] 而不是返回nil null的问题
+		out.List = make([]model.AdminGetListOutputItem, 0, 0)
 		return out, err
 	}
 	//5. 延迟初始化list切片 确定有数据，再按期望大小初始化切片容量
-	out.List = make([]model.AdminGetListOutputItem, 0, in.Size)
+	out.List = make([]model.AdminGetListOutputItem, 0, out.Total)
 	//6. 把查询到的结果赋值到响应结构体中
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
