@@ -31,7 +31,6 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 		AuthAfterFunc:    authAfterFunc,
 		MultiLogin:       consts.MultiLogin,
 	}
-	//todo 去掉全局校验，只用cmd中的路由组校验
 	err = gfAdminToken.Start()
 	return
 }
